@@ -1,17 +1,20 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "../pages/HomePage";
-import MapPage from "../pages/MapPage";
+import MapsPage from "../pages/MapsPage";
 import CalendarPage from "../pages/CalendarPage";
 import GraphicsPage from "../pages/GraphicsPage";
+import Layout from "../layout/layout";
 
 function RoutesComponent() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<HomePage/>} />
-        <Route path='/map' element={<MapPage />} />
-        <Route path='/calendar' element={<CalendarPage />} />
-        <Route path='/graphics' element={<GraphicsPage />} />
+        <Route element={<Layout />}>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/maps' element={<MapsPage />} />
+          <Route path='/calendar' element={<CalendarPage />} />
+          <Route path='/graphics' element={<GraphicsPage />} />
+        </Route>
       </Routes>
     </Router>
   )
