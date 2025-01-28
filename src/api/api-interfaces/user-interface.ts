@@ -3,7 +3,7 @@ export interface IUser {
     name: string;
     lastname: string;
     email: string;
-    level: "Advanced" | "Beginner";
+    level: string;
     location: string;
     lang: number;
     lat: number;
