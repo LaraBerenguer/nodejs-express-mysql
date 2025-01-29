@@ -28,6 +28,7 @@ export const changeUser = () => {
         email: 'otheruser@email.com',
         level: 'Advanced',
         location: 'Carrer de Mallorca',
+        id_location: '7',
         game: 'Dungeons and Dragons'
     };
 

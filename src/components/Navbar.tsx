@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ThemeController from "./ThemeController";
 
 const Navbar = () => {
     return (
@@ -36,7 +37,8 @@ const Navbar = () => {
                     <li><Link to="/graphics">Graphics</Link></li>
                 </ul>
             </div>
-            <div className="navbar-end">
+            <div className="navbar-end flex gap-3">
+                <ThemeController />
                 <Link className="btn" to="/users">Users</Link>
             </div>
         </div>

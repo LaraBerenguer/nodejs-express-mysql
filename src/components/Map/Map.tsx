@@ -3,6 +3,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import './map.css';
 import { useRef, useEffect } from "react";
 import locations from '../../api/locations-mockup-data.json';
+import users from '../../api/users-mockup-data.json';
 
 const Map = () => {
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
@@ -17,11 +18,18 @@ const Map = () => {
                 zoom: 12,
             });
 
-            locations.map(location => {
+            locations.forEach(location => {
+                const user = users.find((u) => u.id_location === location.location_id);
+                const gameName = user ? user.game : "No game";
+                const address = user ? user.location : "No address";    
+
                 new mapboxgl.Marker({ color: 'black' }) //marker de ejemplo
                     .setLngLat([location.lng, location.lat]) //cambiará con datos localización de la base de datos
+                    .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML( //popup del marker
+                        `<h3>${gameName}</h3><p>${address}</p>`
+                    ))
                     .addTo(map);
-            });
+            })
 
             return () => { map.remove() }
         }
