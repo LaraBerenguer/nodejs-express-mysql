@@ -4,6 +4,7 @@ import MapsPage from "../pages/MapsPage";
 import CalendarPage from "../pages/CalendarPage";
 import GraphicsPage from "../pages/GraphicsPage";
 import Layout from "../layout/layout";
+import UsersPage from "../pages/UsersPage";
 
 function RoutesComponent() {
   return (
@@ -14,6 +15,7 @@ function RoutesComponent() {
           <Route path='/maps' element={<MapsPage />} />
           <Route path='/calendar' element={<CalendarPage />} />
           <Route path='/graphics' element={<GraphicsPage />} />
+          <Route path='/users' element={<UsersPage />} />
         </Route>
       </Routes>
     </Router>

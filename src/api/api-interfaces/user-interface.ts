@@ -5,7 +5,5 @@ export interface IUser {
     email: string;
     level: string;
     location: string;
-    lang: number;
-    lat: number;
     game: string;
 };

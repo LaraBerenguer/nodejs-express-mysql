@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import users from '../api/users-mockup-data.json';
 import { IUser } from '../api/api-interfaces/user-interface';
 
@@ -8,20 +7,8 @@ export const getUsers = () => {
 };
 
 //post
-export const createUser = () => {
-    const newUser: IUser = {
-        id: uuidv4(),
-        name: 'New',
-        lastname: 'User',
-        email: 'newuser@email.com',
-        level: 'Advanced',
-        location: 'Carrer de Valencia',
-        lang: 2.168638,
-        lat: 41.396710,
-        game: 'Dungeons and Dragons'
-    };
-
-    users.push(newUser);
+export const createUser = (userData: IUser) => {  
+    users.push(userData);
 };
 
 //put
@@ -41,8 +28,6 @@ export const changeUser = () => {
         email: 'otheruser@email.com',
         level: 'Advanced',
         location: 'Carrer de Mallorca',
-        lang: 2.174356,
-        lat: 41.385064,
         game: 'Dungeons and Dragons'
     };
 
@@ -63,8 +48,6 @@ export const modifyUser = () => {
     const newUser: Partial<IUser> = {
         ...foundUser,
         location: 'Plazça de Espanya',
-        lang: 2.148108,
-        lat: 41.375517,
         game: 'Pathfinder 2e'
     };
 
@@ -73,9 +56,9 @@ export const modifyUser = () => {
 };
 
 //delete
-export const deleteUser = () => {
-    const inputUser = "newuser@email.com";
-    const userIndex = users.findIndex(user => user.email === inputUser);
+export const deleteUser = (id: string) => {
+    const inputUser = id;
+    const userIndex = users.findIndex(user => user.id === inputUser);
 
     if (userIndex !== -1) {
         users.splice(userIndex, 1)
