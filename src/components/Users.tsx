@@ -8,7 +8,7 @@ const Users = () => {
     const [users, setUsers] = useState<IUser[]>([]);
     const [visibiliy, setVisibility] = useState<boolean>(false);
 
-    const [newUserData, setNewUserData] = useState<IUser>({ id: uuidv4(), name: '', lastname: '', email: '', level: '', game: '', location: '' });
+    const [newUserData, setNewUserData] = useState<IUser>({ id: uuidv4(), name: '', lastname: '', email: '', level: '', game: '', location: '', id_location: ''});
     //class new user?
     //require no me vale
 
@@ -29,7 +29,7 @@ const Users = () => {
         e.preventDefault();
         createUser(newUserData);
         setVisibility(false);
-        setNewUserData({ id: uuidv4(), name: '', lastname: '', email: '', level: '', game: '', location: '' });
+        setNewUserData({ id: uuidv4(), name: '', lastname: '', email: '', level: '', game: '', location: '',  id_location: ''});
         console.log("users add user:", users);
     };
 
