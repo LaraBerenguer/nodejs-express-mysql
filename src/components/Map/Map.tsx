@@ -30,8 +30,6 @@ const Map = () => {
                     ))
                     .addTo(map);
             })
-
-            return () => { map.remove() }
         }
 
     }, []);

@@ -37,7 +37,7 @@ const Navbar = () => {
                     <li><Link to="/graphics">Graphics</Link></li>
                 </ul>
             </div>
-            <div className="navbar-end flex gap-3">
+            <div className="navbar-end flex gap-6">
                 <ThemeController />
                 <Link className="btn" to="/users">Users</Link>
             </div>
