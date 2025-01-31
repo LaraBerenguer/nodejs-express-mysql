@@ -1,42 +1,96 @@
+import { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import './map.css';
-import { useRef, useEffect } from "react";
-import locations from '../../api/locations-mockup-data.json';
-import users from '../../api/users-mockup-data.json';
+import locations from "../../api/locations-mockup-data.json";
 
 const Map = () => {
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
+    const mapRef = useRef<mapboxgl.Map | null>(null);
+    const markersRef = useRef<{ [key: string]: mapboxgl.Marker[] }>({});
+    const [filters, setFilters] = useState<{ [key: string]: boolean }>({});
 
     useEffect(() => {
-        if (mapContainerRef.current) {
-            mapboxgl.accessToken = import.meta.env.VITE_MAP_TOKEN
-            const map = new mapboxgl.Map({
-                container: mapContainerRef.current,
-                style: "mapbox://styles/mapbox/streets-v11",
-                center: [2.17590, 41.39003],
-                zoom: 12,
+        if (!mapContainerRef.current) return;
+
+        mapboxgl.accessToken = import.meta.env.VITE_MAP_TOKEN;
+
+        const map = new mapboxgl.Map({
+            container: mapContainerRef.current,
+            style: "mapbox://styles/mapbox/streets-v11",
+            center: [2.1759, 41.39003],
+            zoom: 12,
+        });
+
+        mapRef.current = map;
+
+        map.on("load", () => {
+            const groupedLocations: { [key: string]: typeof locations } = {};
+
+            locations.forEach((location) => {
+                if (!groupedLocations[location.place]) {
+                    groupedLocations[location.place] = [];
+                }
+                groupedLocations[location.place].push(location);
             });
 
-            locations.forEach(location => {
-                const user = users.find((u) => u.id_location === location.location_id);
-                const gameName = user ? user.game : "No game";
-                const address = user ? user.location : "No address";    
+            //Checkboxes
+            setFilters(
+                Object.keys(groupedLocations).reduce((acc, place) => {
+                    acc[place] = true;
+                    return acc;
+                }, {} as { [key: string]: boolean })
+            );
 
-                new mapboxgl.Marker({ color: 'black' }) //marker de ejemplo
-                    .setLngLat([location.lng, location.lat]) //cambiará con datos localización de la base de datos
-                    .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML( //popup del marker
-                        `<h3>${gameName}</h3><p>${address}</p>`
-                    ))
-                    .addTo(map);
-            })
-        }
+            //Markers
+            Object.entries(groupedLocations).forEach(([place, locations]) => {
+                const color = place === "store" ? "black" : "red";
 
+                markersRef.current[place] = locations.map((loc) => {
+                    const marker = new mapboxgl.Marker({ color: `${color}` })
+                        .setLngLat([loc.lng, loc.lat])
+                        .setPopup(
+                            new mapboxgl.Popup({ offset: 25 }).setHTML(
+                                `<h3>${loc.location}</h3><p>${place}</p>`
+                            )
+                        )
+                        .addTo(map);
+
+                    return marker;
+                });
+            });
+        });
+
+        return () => map.remove();
     }, []);
 
+    //Filters
+    const toggleFilter = (place: string) => {
+        setFilters((prev) => {
+            const newFilters = { ...prev, [place]: !prev[place] };
+            
+            if (markersRef.current[place]) {
+                markersRef.current[place].forEach((marker) => {
+                    marker.getElement().style.display = newFilters[place] ? "block" : "none";
+                });
+            }
+
+            return newFilters;
+        });
+    };
+
     return (
-        <div id='map-container' ref={mapContainerRef} />
-    )
+        <div>            
+            <div className="filter-group">
+                {Object.keys(filters).map((place) => (
+                    <label key={place}>
+                        <input type="checkbox" checked={filters[place]} onChange={() => toggleFilter(place)} />
+                        {place}
+                    </label>
+                ))}
+            </div>           
+            <div id="map-container" ref={mapContainerRef} style={{ width: "100%", height: "500px" }} />
+        </div>
+    );
 };
 
 export default Map;

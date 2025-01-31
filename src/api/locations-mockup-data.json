@@ -1,37 +1,43 @@
 [
   {
     "id": "1",
-    "location": "Carrer de la Marina",
-    "lng": 2.18601,
-    "lat": 41.40249
+    "location": "Kaburi",
+    "place": "Tienda",
+    "lng": 2.178319,
+    "lat": 41.392465
   },
   {
     "id": "2",
-    "location": "Passeig de Gràcia",
-    "lng": 2.17386,
-    "lat": 41.40393
+    "location": "GAMERIA",
+    "place": "Tienda",
+    "lng": 2.1774212,
+    "lat": 41.3923177
   },
   {
     "id": "3",
-    "location": "Rambla del Raval",
-    "lng": 2.16181,
-    "lat": 41.38966
+    "location": "El Nucli",
+    "place": "Tienda",
+    "lng": 2.137255,
+    "lat": 41.378275
   },
   {
     "id": "4",
-    "location": "Carrer Aragó",
+    "location": "Dungeon Marvels",
+    "place": "Tienda",
     "lng": 2.13064,
     "lat": 41.39580
   },
   {
     "id": "5",
-    "location": "Carrer de la Marina",
-    "lng": 2.17793,
-    "lat": 41.43994
+    "location": "Carrer Cristobal de Moura",
+    "place": "Mesa Privada",
+    "lng": 2.205001,
+    "lat": 41.411781
   },
   {
     "id": "6",
     "location": "Avinguda Diagonal",
+    "place": "Mesa Privada",
     "lng": 2.13536,
     "lat": 41.37121
   }
