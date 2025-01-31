@@ -1,7 +1,6 @@
 export interface IEvent {
     id: string,
     title: string,
-    game: string,
     start: string,
     end: string,
     allDay: boolean,

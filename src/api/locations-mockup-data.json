@@ -1,33 +1,38 @@
 [
-    {
-      "location_id": "1",
-      "lng": 2.18601,
-      "lat": 41.40249
-    },
-    {
-      "location_id": "2",
-      "lng": 2.17386,
-      "lat": 41.40393
-    },
-    {
-      "location_id": "3",
-      "lng": 2.16181, 
-      "lat": 41.38966
-    },
-    {
-      "location_id": "4",
-      "lng": 2.13064, 
-      "lat": 41.39580
-    },
-    {
-      "location_id": "5",
-      "lng": 2.17793, 
-      "lat": 41.43994
-    },
-    {
-      "location_id": "6",
-      "lng": 2.13536, 
-      "lat": 41.37121
-    }
-  ]
-  
+  {
+    "id": "1",
+    "location": "Carrer de la Marina",
+    "lng": 2.18601,
+    "lat": 41.40249
+  },
+  {
+    "id": "2",
+    "location": "Passeig de Gràcia",
+    "lng": 2.17386,
+    "lat": 41.40393
+  },
+  {
+    "id": "3",
+    "location": "Rambla del Raval",
+    "lng": 2.16181,
+    "lat": 41.38966
+  },
+  {
+    "id": "4",
+    "location": "Carrer Aragó",
+    "lng": 2.13064,
+    "lat": 41.39580
+  },
+  {
+    "id": "5",
+    "location": "Carrer de la Marina",
+    "lng": 2.17793,
+    "lat": 41.43994
+  },
+  {
+    "id": "6",
+    "location": "Avinguda Diagonal",
+    "lng": 2.13536,
+    "lat": 41.37121
+  }
+]

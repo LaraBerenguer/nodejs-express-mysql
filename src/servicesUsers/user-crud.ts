@@ -23,13 +23,9 @@ export const changeUser = () => {
 
     const updatedUser: IUser = {
         id: users[userIndex].id,
-        name: 'Other',
-        lastname: 'User',
+        nickname: 'Other',
         email: 'otheruser@email.com',
-        level: 'Advanced',
-        location: 'Carrer de Mallorca',
-        id_location: '7',
-        game: 'Dungeons and Dragons'
+        level: 'Advanced'
     };
 
     users[userIndex] = updatedUser;
@@ -48,8 +44,7 @@ export const modifyUser = () => {
 
     const newUser: Partial<IUser> = {
         ...foundUser,
-        location: 'Plazça de Espanya',
-        game: 'Pathfinder 2e'
+        email: 'newmail@email.com'
     };
 
     users[userIndex] = { ...users[userIndex], ...newUser };

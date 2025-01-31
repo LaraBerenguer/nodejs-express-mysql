@@ -12,7 +12,6 @@ const CalendarPage = () => {
                 <div className="basis-2/3"><Calendar /></div>
                 <div className="basis-1/3"><EventsForm /></div>
             </div>
-
         </div>
     )
 };

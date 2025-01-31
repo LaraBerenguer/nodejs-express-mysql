@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const EventsForm = () => {
 
-    const [newEvent, setNewEvent] = useState<IEvent>({ id: uuidv4(), title: '', game: '', start: '', end: '', allDay: false, location_id: '', user_ids: [''], description: '', category: '', color: '' });
+    const [newEvent, setNewEvent] = useState<IEvent>({ id: uuidv4(), title: '', start: '', end: '', allDay: false, location_id: '', user_ids: [''], description: '', category: '', color: '' });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -16,26 +16,34 @@ const EventsForm = () => {
     const handleEventCreation = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         //create event on calendar o guardarlo en event para pasarlo por context al calendar y consumirlo ahí        
-        setNewEvent({ id: uuidv4(), title: '', game: '', start: '', end: '', allDay: false, location_id: '', user_ids: [''], description: '', category: '', color: '' });
+        setNewEvent({ id: uuidv4(), title: '', start: '', end: '', allDay: false, location_id: '', user_ids: [''], description: '', category: '', color: '' });
     }
 
     return (
         <div className="event-form max-w-md self-center">
             <div className="event-form-addEvent">
                 <form className="flex flex-col gap-4" onSubmit={handleEventCreation}>
-                    <select
-                        className="select select-bordered grow"
-                        name="game"
-                        value={newEvent.game}
-                        onChange={handleInputChange}
-                        required
-                    >
-                        <option value="" disabled hidden>Game</option>
-                        <option value="Dungeons and Dragons">Dungeons and Dragons</option>
-                        <option value="Pathfinder 2e">Pathfinder 2e</option>
-                        <option value="Vampire The Masquerade">Vampire The Masquerade</option>
-                        <option value="Call of Cthulhu">Call of Cthulhu</option>
-                    </select>
+                    <label className="input input-bordered flex items-center gap-2">
+                        Title
+                        <input
+                            type="text"
+                            className="grow"
+                            name="title"
+                            value={newEvent.title}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </label>
+                    <label className="input input-bordered flex items-center gap-2">
+                        Description
+                        <input
+                            type="text"
+                            className="grow"
+                            name="description"
+                            value={newEvent.description}
+                            onChange={handleInputChange}
+                        />
+                    </label>
                     <label className="input input-bordered flex items-center gap-2">
                         Start date
                         <input
@@ -67,8 +75,8 @@ const EventsForm = () => {
                     >
                         <option value="" disabled hidden>Location</option>
                         {locations.map(location => (
-                            <option key={location.location_id} value={location.location_id}>
-                                {/*location.name*/}
+                            <option key={location.id} value={location.id}>
+                                {location.location}
                             </option>
                         ))}
                     </select>
@@ -79,10 +87,10 @@ const EventsForm = () => {
                         onChange={handleInputChange}
                         required
                     >
-                        <option value="" disabled hidden>User</option>
+                        <option value="" disabled hidden>Who's playing?</option>
                         {users.map(user => (
                             <option key={user.id} value={user.id}>
-                                {user.name} {user.lastname}
+                                {user.nickname}
                             </option>
                         ))}
                     </select>

@@ -1,62 +1,38 @@
 [
   {
     "id": "1",
-    "name": "Alice",
-    "lastname": "Martínez",
+    "nickname": "Alice",
     "email": "alice.martinez@email.com",
-    "level": "Advanced",
-    "location": "Carrer de la Marina",
-    "id_location": "1",
-    "game": "Dungeons and Dragons"
+    "level": "Advanced"
   },
   {
     "id": "2",
-    "name": "Carlos",
-    "lastname": "López",
+    "nickname": "Carlos",
     "email": "carlos.lopez@email.com",
-    "level": "Beginner",
-    "location": "Passeig de Gràcia",
-    "id_location": "2",
-    "game": "Pathfinder 2e"
+    "level": "Beginner"    
   },
   {
     "id": "3",
-    "name": "Beatriz",
-    "lastname": "Sánchez",
+    "nickname": "Beatriz",
     "email": "beatriz.sanchez@email.com",
-    "level": "Advanced",
-    "location": "Rambla del Raval",
-    "id_location": "3",
-    "game": "Vampire The Masquerade"
+    "level": "Advanced"    
   },
   {
     "id": "4",
-    "name": "David",
-    "lastname": "García",
+    "nickname": "David",
     "email": "david.garcia@email.com",
-    "level": "Beginner",
-    "location": "Carrer Aragó",
-    "id_location": "4",
-    "game": "Call of Cthulhu"
+    "level": "Beginner"    
   },
   {
     "id": "5",
-    "name": "Elena",
-    "lastname": "Fernández",
+    "nickname": "Elena",
     "email": "elena.fernandez@email.com",
-    "level": "Advanced",
-    "location": "Carrer de la Marina",
-    "id_location": "1",
-    "game": "Dungeons and Dragons"
+    "level": "Advanced"    
   },
   {
     "id": "6",
-    "name": "Javier",
-    "lastname": "Pérez",
+    "nickname": "Javier",
     "email": "javier.perez@email.com",
-    "level": "Beginner",
-    "location": "Avinguda Diagonal",
-    "id_location": "6",
-    "game": "Pathfinder 2e"
+    "level": "Beginner"    
   }
 ]
