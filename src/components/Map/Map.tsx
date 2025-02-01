@@ -9,6 +9,21 @@ const Map = () => {
     const markersRef = useRef<{ [key: string]: mapboxgl.Marker[] }>({});
     const [filters, setFilters] = useState<{ [key: string]: boolean }>({});
 
+    //Filters
+    const toggleFilter = (place: string) => {
+        setFilters((prev) => {
+            const newFilters = { ...prev, [place]: !prev[place] };
+
+            if (markersRef.current[place]) {
+                markersRef.current[place].forEach((marker) => {
+                    marker.getElement().style.display = newFilters[place] ? "block" : "none";
+                });
+            }
+
+            return newFilters;
+        });
+    };
+
     useEffect(() => {
         if (!mapContainerRef.current) return;
 
@@ -43,7 +58,7 @@ const Map = () => {
 
             //Markers
             Object.entries(groupedLocations).forEach(([place, locations]) => {
-                const color = place === "store" ? "black" : "red";
+                const color = place === "store" ? "red" : "black";
 
                 markersRef.current[place] = locations.map((loc) => {
                     const marker = new mapboxgl.Marker({ color: `${color}` })
@@ -63,31 +78,16 @@ const Map = () => {
         return () => map.remove();
     }, []);
 
-    //Filters
-    const toggleFilter = (place: string) => {
-        setFilters((prev) => {
-            const newFilters = { ...prev, [place]: !prev[place] };
-            
-            if (markersRef.current[place]) {
-                markersRef.current[place].forEach((marker) => {
-                    marker.getElement().style.display = newFilters[place] ? "block" : "none";
-                });
-            }
-
-            return newFilters;
-        });
-    };
-
     return (
-        <div>            
-            <div className="filter-group">
+        <div>
+            <div className="filter-group my-2">
                 {Object.keys(filters).map((place) => (
-                    <label key={place}>
-                        <input type="checkbox" checked={filters[place]} onChange={() => toggleFilter(place)} />
-                        {place}
+                    <label key={place} className="label cursor-pointer flex justify-end gap-2">
+                        <span className="label-text">{place}</span>
+                        <input type="checkbox" checked={filters[place]} onChange={() => toggleFilter(place)} className="checkbox" />
                     </label>
                 ))}
-            </div>           
+            </div>
             <div id="map-container" ref={mapContainerRef} style={{ width: "100%", height: "500px" }} />
         </div>
     );

@@ -3,6 +3,7 @@ import locations from '../api/locations-mockup-data.json';
 import { IEvent } from '../api/api-interfaces/events-interface';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { createEvent } from '../servicesEvent/event-crud';
 
 const EventsForm = () => {
 
@@ -15,7 +16,7 @@ const EventsForm = () => {
 
     const handleEventCreation = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        //create event on calendar o guardarlo en event para pasarlo por context al calendar y consumirlo ahí        
+        createEvent(newEvent);
         setNewEvent({ id: uuidv4(), title: '', start: '', end: '', allDay: false, location_id: '', user_ids: [''], description: '', category: '', color: '' });
     }
 
@@ -84,7 +85,11 @@ const EventsForm = () => {
                         className="select select-bordered grow"
                         name="user_ids"
                         value={newEvent.user_ids}
-                        onChange={handleInputChange}
+                        onChange={(e) => {
+                            const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
+                            setNewEvent({ ...newEvent, user_ids: selectedOptions });
+                        }}
+                        multiple
                         required
                     >
                         <option value="" disabled hidden>Who's playing?</option>

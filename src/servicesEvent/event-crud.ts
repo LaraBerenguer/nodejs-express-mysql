@@ -9,6 +9,7 @@ export const getEvents = () => {
 //post
 export const createEvent = (eventData: IEvent) => {  
     events.push(eventData);
+    console.log("events: ",events);
 };
 
 //put
