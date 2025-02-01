@@ -9,6 +9,7 @@ class Server {
         this.app = express();
         this.port = process.env.PORT || "3001";
         this.listen();
+        this.middlewares();
         this.routes();
     };
 
@@ -26,6 +27,11 @@ class Server {
         })
 
         this.app.use('/api/users', routesUsers)
+    }
+
+    //parse the body
+    middlewares() {
+        this.app.use(express.json())
     }
 };
 

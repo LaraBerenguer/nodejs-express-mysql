@@ -22,8 +22,22 @@ export const deleteUser = (req: Request, res: Response) => {
 }
 
 export const createUser = (req: Request, res: Response) => {    
+    const { body } = req;
+    console.log(body)
+    
     res.json({
         msg: "create user",
-        body: req.params.body
+        body: body
+    })
+}
+
+export const updateUser = (req: Request, res: Response) => {    
+    const { body } = req;
+    const { id } = req.params;  
+    
+    res.json({
+        msg: "put user",
+        id: id,
+        body: body       
     })
 }
