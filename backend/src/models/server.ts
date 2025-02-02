@@ -1,16 +1,18 @@
-import express, {Request, Response} from 'express';
+import express, { Request, Response } from 'express';
 import routesUsers from '../routes/users';
+import db from '../database/connection';
 
 class Server {
     private app: express.Application;
     private port: string;
-    
+
     constructor() {
         this.app = express();
         this.port = process.env.PORT || "3001";
         this.listen();
         this.middlewares();
         this.routes();
+        this.dbConnect();
     };
 
     listen() {
@@ -32,6 +34,15 @@ class Server {
     //parse the body
     middlewares() {
         this.app.use(express.json())
+    }
+
+    async dbConnect() {
+        try {
+            await db.authenticate();
+            console.log("Database connected");
+        } catch (error) {
+            console.error('Unable to connect to the database:', error);
+        }
     }
 };
 
