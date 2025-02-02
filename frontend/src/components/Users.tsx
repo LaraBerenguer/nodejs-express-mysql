@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createUser, deleteUser, getUsers } from "../servicesUsers/user-crud";
+import { createUser, deleteUser, getUsers } from "../services/servicesUsers/user-crud";
 import { IUser } from "../api/api-interfaces/user-interface";
 import { v4 as uuidv4 } from 'uuid';
 

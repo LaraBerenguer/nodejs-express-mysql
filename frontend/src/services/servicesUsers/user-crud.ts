@@ -1,5 +1,5 @@
-import users from '../api/users-mockup-data.json';
-import { IUser } from '../api/api-interfaces/user-interface';
+import users from '../../api/users-mockup-data.json';
+import { IUser } from '../../api/api-interfaces/user-interface';
 
 //get
 export const getUsers = () => {

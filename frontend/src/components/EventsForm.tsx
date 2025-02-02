@@ -3,7 +3,7 @@ import locations from '../api/locations-mockup-data.json';
 import { IEvent } from '../api/api-interfaces/events-interface';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { createEvent } from '../servicesEvent/event-crud';
+import { createEvent } from '../services/servicesEvent/event-crud';
 
 const EventsForm = () => {
 

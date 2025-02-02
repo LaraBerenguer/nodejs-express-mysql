@@ -1,5 +1,5 @@
-import events from '../api/events-mockup-data.json';
-import { IEvent } from '../api/api-interfaces/events-interface';
+import events from '../../api/events-mockup-data.json';
+import { IEvent } from '../../api/api-interfaces/events-interface';
 
 //get
 export const getEvents = () => {

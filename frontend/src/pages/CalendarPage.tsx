@@ -1,6 +1,5 @@
 import Calendar from "../components/Calendar/Calendar";
 import EventsForm from "../components/EventsForm";
-//import "../components/Calendar/calendar.css";
 
 const CalendarPage = () => {
     return (
