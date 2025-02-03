@@ -25,9 +25,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 
     if (user) {
         await user.destroy();
-        res.status(204).json({
-            msg: `User deleted!`
-        })
+        res.status(204).send;
     } else {
         res.status(404).json({
             msg: `No user with id ${id}`
@@ -39,7 +37,7 @@ export const createUser = async (req: Request, res: Response) => {
     const { body } = req;
 
     try {
-        var userdb = await User.create(body);        
+        var userdb = await User.create(body);
         res.status(201).json(userdb);
     } catch (error) {
         console.log(error);

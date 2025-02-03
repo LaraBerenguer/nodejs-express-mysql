@@ -15,7 +15,7 @@ export const getUsers = async () => {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        
+
         const data = await response.json();
         return data;
     } catch (error) {
@@ -44,7 +44,7 @@ export const createUser = async (userData: IUser) => {
 //put
 export const changeUser = async ({userData, id}: {userData: IUser, id: string}) => {
     try {
-        const response = await fetch(`${API_URL}/api/user/${id}`, {
+        const response = await fetch(`${API_URL}/api/users/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -61,7 +61,7 @@ export const changeUser = async ({userData, id}: {userData: IUser, id: string}) 
 //patch
 export const modifyUser = async ({userData, id}: {userData: IUser, id: string}) => {
     try {
-        const response = await fetch(`${API_URL}/api/user/${id}`, {
+        const response = await fetch(`${API_URL}/api/users/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -78,13 +78,18 @@ export const modifyUser = async ({userData, id}: {userData: IUser, id: string}) 
 //delete
 export const deleteUser = async (id: string) => {
     try {
-        const response = await fetch(`${API_URL}/api/user/${id}`, {
+        const response = await fetch(`${API_URL}/api/users/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
             },
         });
-        return response.json();
+
+        if (!response.ok) {
+            throw new Error('Error deleting users:')
+        }
+
+        return response.status === 204 ? null : await response.json();
     } catch (error) {
         console.error('Error deleting users:', error);
         throw error;

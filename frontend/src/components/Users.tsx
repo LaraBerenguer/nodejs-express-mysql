@@ -42,8 +42,9 @@ const Users = () => {
 
     const handleDeleteUser = async (userId: string) => {
         await deleteUser(userId);
-        fetchUsers();
-        console.log("users delete user:", users);
+        //fetchUsers();
+        //this one prevents another backend call
+        setUsers((prevUsers) => prevUsers.filter(user => user.id !== userId));
     };
 
     return (
