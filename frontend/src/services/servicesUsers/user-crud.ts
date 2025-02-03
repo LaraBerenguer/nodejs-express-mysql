@@ -89,7 +89,10 @@ export const deleteUser = async (id: string) => {
             throw new Error('Error deleting users:')
         }
 
-        return response.status === 204 ? null : await response.json();
+        if (response.status === 204) {return null;}
+
+        return await response.json();
+        
     } catch (error) {
         console.error('Error deleting users:', error);
         throw error;

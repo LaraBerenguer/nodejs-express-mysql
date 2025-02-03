@@ -17,21 +17,24 @@ export const getUser = async (req: Request, res: Response) => {
             msg: `No user with id ${id}`
         })
     }
-}
+};
 
 export const deleteUser = async (req: Request, res: Response) => {
+
     const { id } = req.params;
     const user = await User.findByPk(id);
 
-    if (user) {
-        await user.destroy();
-        res.status(204).send;
-    } else {
-        res.status(404).json({
-            msg: `No user with id ${id}`
-        })
+    if (!user) {
+        return res.status(404).json({ msg: `No user with id ${id}` });
     }
-}
+
+    await user.destroy();
+    return res.status(204).send();
+
+    //console.error("Error deleting user:", error);
+    //return res.status(500).json({ msg: "Something went wrong" });
+
+};
 
 export const createUser = async (req: Request, res: Response) => {
     const { body } = req;
@@ -45,7 +48,7 @@ export const createUser = async (req: Request, res: Response) => {
             msg: "Something went wrong"
         })
     }
-}
+};
 
 export const updateUser = async (req: Request, res: Response) => {
     const { body } = req;

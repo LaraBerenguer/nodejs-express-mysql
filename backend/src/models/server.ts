@@ -10,10 +10,10 @@ class Server {
     constructor() {
         this.app = express();
         this.port = process.env.PORT || "3001";
-        this.listen();
         this.middlewares();
         this.routes();
         this.dbConnect();
+        this.listen();
     };
 
     listen() {
@@ -34,19 +34,18 @@ class Server {
 
     middlewares() {
 
-        //cors express config       
-        const corsOptions = {
-            origin: ['http://localhost:3000', 'http://localhost:5173'],
+        //cors express config
+        this.app.use(cors({
+            origin: ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:5174'],
             methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
             allowedHeaders: ['Content-Type'],
             preflightContinue: false,
             optionsSuccessStatus: 204,
-        }
-
-        this.app.use(cors())
+        }));
 
         //parse the body
-        this.app.use(express.json())
+        this.app.use(express.json());
+        console.log("Middlewares loaded succesfully");
     }
 
     async dbConnect() {
