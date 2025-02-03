@@ -1,20 +1,26 @@
 import { useEffect, useState } from "react";
 import { createUser, deleteUser, getUsers } from "../services/servicesUsers/user-crud";
 import { IUser } from "../api/api-interfaces/user-interface";
-import { v4 as uuidv4 } from 'uuid';
 
 const Users = () => {
 
     const [users, setUsers] = useState<IUser[]>([]);
     const [visibiliy, setVisibility] = useState<boolean>(false);
 
-    const [newUserData, setNewUserData] = useState<IUser>({ id: uuidv4(), nickname: '', email: '', level: ''});
-    //class new user?
-    //require no me vale
+    const [newUserData, setNewUserData] = useState<IUser>({ nickname: '', email: '', level: '' });
 
     useEffect(() => {
-        setUsers(getUsers());
+        fetchUsers();
     }, []);
+
+    const fetchUsers = async () => {
+        try {
+            const users = await getUsers();
+            setUsers(users);
+        } catch (error) {
+            console.error("Error fetching users:", error);
+        }
+    };
 
     const openForm = () => {
         setVisibility(true);
@@ -25,17 +31,18 @@ const Users = () => {
         setNewUserData({ ...newUserData, [name]: value });
     };
 
-    const handleAddUser = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleAddUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        createUser(newUserData);
+        await createUser(newUserData);
         setVisibility(false);
-        setNewUserData({ id: uuidv4(), nickname: '', email: '', level: ''});
-        console.log("users add user:", users);
+        setNewUserData({ nickname: '', email: '', level: '' });
+        fetchUsers();
+        console.log("prev users:", users);
     };
 
-    const handleDeleteUser = (userId: string) => {
-        deleteUser(userId);
-        setUsers(users.filter(user => user.id !== userId));
+    const handleDeleteUser = async (userId: string) => {
+        await deleteUser(userId);
+        fetchUsers();
         console.log("users delete user:", users);
     };
 
@@ -46,20 +53,20 @@ const Users = () => {
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Nickname</th>                            
+                            <th>Nickname</th>
                             <th>Email</th>
-                            <th>Level</th>                            
+                            <th>Level</th>
                         </tr>
                     </thead>
                     {users.map(user =>
                         <tbody key={user.id}>
                             <tr className="hover">
                                 <th></th>
-                                <td>{user.nickname}</td>                                
+                                <td>{user.nickname}</td>
                                 <td>{user.email}</td>
-                                <td>{user.level}</td>                                
+                                <td>{user.level}</td>
                                 <td className="flex gap-2">
-                                    <button className="btn btn-sm btn-outline btn-error" onClick={() => handleDeleteUser(user.id)}>Del</button>
+                                    <button className="btn btn-sm btn-outline btn-error" onClick={() => handleDeleteUser(user.id!)}>Del</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -75,8 +82,8 @@ const Users = () => {
                         <form className="flex flex-col gap-2">
                             <label className="input input-bordered flex items-center gap-2">
                                 Name
-                                <input type="text" className="grow" name="name" value={newUserData.nickname} onChange={handleInputChange} placeholder="Daisy" required />
-                            </label>                            
+                                <input type="text" className="grow" name="nickname" value={newUserData.nickname} onChange={handleInputChange} placeholder="Daisy" required />
+                            </label>
                             <label className="input input-bordered flex items-center gap-2">
                                 Email
                                 <input type="email" className="grow" name="email" value={newUserData.email} onChange={handleInputChange} placeholder="daisy@site.com" required />

@@ -1,64 +1,92 @@
-import users from '../../api/users-mockup-data.json';
 import { IUser } from '../../api/api-interfaces/user-interface';
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
+
 //get
-export const getUsers = () => {
-    return users;
+export const getUsers = async () => {
+    try {
+        const response = await fetch(`${API_URL}/api/users`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        throw error;
+    }
 };
 
 //post
-export const createUser = (userData: IUser) => {  
-    users.push(userData);
+export const createUser = async (userData: IUser) => {
+    try {
+        const response = await fetch(`${API_URL}/api/users`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        });
+        return response.json();
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        throw error;
+    }
 };
 
 //put
-export const changeUser = () => {
-    const inputUser = "newuser@email.com";
-    const foundUser = users.find(user => user.email === inputUser);
-    const userIndex = users.findIndex(user => user.email === inputUser);
-
-    if (!foundUser) {
-        return "user not found. Try again."
-    };
-
-    const updatedUser: IUser = {
-        id: users[userIndex].id,
-        nickname: 'Other',
-        email: 'otheruser@email.com',
-        level: 'Advanced'
-    };
-
-    users[userIndex] = updatedUser;
-    return "user updated";
+export const changeUser = async ({userData, id}: {userData: IUser, id: string}) => {
+    try {
+        const response = await fetch(`${API_URL}/api/user/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        });
+        return response.json();
+    } catch (error) {
+        console.error('Error modifying users:', error);
+        throw error;
+    }
 };
 
 //patch
-export const modifyUser = () => {
-    const inputUser = "newuser@email.com";
-    const foundUser = users.find(user => user.email === inputUser);
-    const userIndex = users.findIndex(user => user.email === inputUser);
-
-    if (!foundUser) {
-        return "user not found. Try again."
-    };
-
-    const newUser: Partial<IUser> = {
-        ...foundUser,
-        email: 'newmail@email.com'
-    };
-
-    users[userIndex] = { ...users[userIndex], ...newUser };
-    return "user updated"
+export const modifyUser = async ({userData, id}: {userData: IUser, id: string}) => {
+    try {
+        const response = await fetch(`${API_URL}/api/user/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        });
+        return response.json();
+    } catch (error) {
+        console.error('Error modifying users:', error);
+        throw error;
+    }
 };
 
 //delete
-export const deleteUser = (id: string) => {
-    const inputUser = id;
-    const userIndex = users.findIndex(user => user.id === inputUser);
-
-    if (userIndex !== -1) {
-        users.splice(userIndex, 1)
-    } else {
-        return "user not found. Try again."
-    };
+export const deleteUser = async (id: string) => {
+    try {
+        const response = await fetch(`${API_URL}/api/user/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        return response.json();
+    } catch (error) {
+        console.error('Error deleting users:', error);
+        throw error;
+    }
 };

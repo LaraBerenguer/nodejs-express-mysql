@@ -8,7 +8,7 @@ export const getUsers = async (req: Request, res: Response) => {
 
 export const getUser = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const user = await User.findByPk();
+    const user = await User.findByPk(id);
 
     if (user) {
         res.json(user)
@@ -21,11 +21,11 @@ export const getUser = async (req: Request, res: Response) => {
 
 export const deleteUser = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const user = await User.findByPk();
+    const user = await User.findByPk(id);
 
     if (user) {
         await user.destroy();
-        res.json({
+        res.status(204).json({
             msg: `User deleted!`
         })
     } else {
@@ -39,13 +39,11 @@ export const createUser = async (req: Request, res: Response) => {
     const { body } = req;
 
     try {
-        await User.create(body);
-        res.json({
-            msg: "User created!"
-        })
+        var userdb = await User.create(body);        
+        res.status(201).json(userdb);
     } catch (error) {
         console.log(error);
-        res.json({
+        res.status(500).json({
             msg: "Something went wrong"
         })
     }
@@ -59,10 +57,8 @@ export const updateUser = async (req: Request, res: Response) => {
 
     try {
         if (user) {
-            await user.update(body);
-            res.json({
-                msg: `User updated`
-            })
+            const userdb = await user.update(body);
+            res.status(202).json(userdb);
         } else {
             res.status(404).json({
                 msg: `No user with id ${id}`
