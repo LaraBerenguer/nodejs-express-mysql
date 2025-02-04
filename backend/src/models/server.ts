@@ -37,13 +37,13 @@ class Server {
     middlewares() {
 
         //cors express config
-        this.app.use(cors({
-            origin: ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175/'],
+        this.app.use(cors(/*{
+            origin: ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175'],
             methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
             allowedHeaders: ['Content-Type'],
             preflightContinue: false,
             optionsSuccessStatus: 204,
-        }));
+        }*/));
 
         //parse the body
         this.app.use(express.json());
