@@ -1,41 +1,83 @@
-import events from '../../api/events-mockup-data.json';
 import { IEvent } from '../../api/api-interfaces/events-interface';
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
+
 //get
-export const getEvents = () => {
-    return events;
+export const getEvents = async () => {
+    try {
+        const response = await fetch(`${API_URL}/api/events`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching events:', error);
+        throw error;
+    }
 };
 
 //post
-export const createEvent = (eventData: IEvent) => {  
-    events.push(eventData);
-    console.log("events: ",events);
+export const createEvent = async (eventData: IEvent) => {  
+    try {
+        const response = await fetch(`${API_URL}/api/events`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(eventData)
+        });
+        return response.json();
+    } catch (error) {
+        console.error('Error fetching events:', error);
+        throw error;
+    }
 };
 
 //put
-export const changeEvent = ({eventData, newEventData}: {eventData: IEvent, newEventData: IEvent}) => {
-    const input = eventData.id;
-    const foundEvent = events.find(event => event.id === input);
-    const eventIndex = events.findIndex(event => event.id === input);
-
-    if (!foundEvent) {
-        return "Event not found. Try again."
-    };
-
-    const updatedEvent: IEvent = {...foundEvent, ...newEventData};
-
-    events[eventIndex] = updatedEvent;
-    return "event updated";
+export const changeEvent = async ({eventData, id}: {eventData: IEvent, id: string}) => {
+    try {
+        const response = await fetch(`${API_URL}/api/events/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(eventData)
+        });
+        return response.json();
+    } catch (error) {
+        console.error('Error modifying events:', error);
+        throw error;
+    }
 };
 
 //delete
-export const deleteUser = (id: string) => {
-    const inputEvent = id;
-    const eventIndex = events.findIndex(event => event.id === inputEvent);
+export const deleteEvent = async (id: string) => {
+    try {
+        const response = await fetch(`${API_URL}/api/events/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
 
-    if (eventIndex !== -1) {
-        events.splice(eventIndex, 1)
-    } else {
-        return "event not found. Try again."
-    };
+        if (!response.ok) {
+            throw new Error('Error deleting events:')
+        }
+
+        if (response.status === 204) {return null;}
+
+        return await response.json();
+        
+    } catch (error) {
+        console.error('Error deleting events:', error);
+        throw error;
+    }
 };

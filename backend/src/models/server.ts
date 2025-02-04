@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import routesUsers from '../routes/users';
+import routesEvents from '../routes/events';
 import db from '../database/connection';
 import cors from 'cors';
 
@@ -29,7 +30,8 @@ class Server {
             })
         })
 
-        this.app.use('/api/users', routesUsers)
+        this.app.use('/api/users', routesUsers);
+        this.app.use('/api/events', routesEvents);
     }
 
     middlewares() {

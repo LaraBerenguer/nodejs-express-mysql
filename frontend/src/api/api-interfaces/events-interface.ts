@@ -5,7 +5,6 @@ export interface IEvent {
     end: string,
     allDay: boolean,
     location_id: string,
-    user_ids: string[],
     description: string,
     category: string,
     color: string;
