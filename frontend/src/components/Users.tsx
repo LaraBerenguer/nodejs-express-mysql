@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { createUser, deleteUser, getUsers } from "../services/servicesUsers/user-crud";
+import { changeUser, createUser, deleteUser, getUsers } from "../services/servicesUsers/user-crud";
 import { IUser } from "../api/api-interfaces/user-interface";
 
 const Users = () => {
 
     const [users, setUsers] = useState<IUser[]>([]);
     const [visibiliy, setVisibility] = useState<boolean>(false);
-
-    const [newUserData, setNewUserData] = useState<IUser>({ nickname: '', email: '', level: '' });
+    const [isEditMode, setIsEditMode] = useState<boolean>(false);
+    const [newUserData, setNewUserData] = useState<IUser>({ nickname: '', email: '', level: '' });   
 
     useEffect(() => {
         fetchUsers();
@@ -24,6 +24,8 @@ const Users = () => {
 
     const openForm = () => {
         setVisibility(true);
+        setIsEditMode(false);
+        setNewUserData({ nickname: '', email: '', level: '' });
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -41,10 +43,32 @@ const Users = () => {
     };
 
     const handleDeleteUser = async (userId: string) => {
-        await deleteUser(userId);
-        //fetchUsers();
-        //this one prevents another backend call
+        await deleteUser(userId);    
         setUsers((prevUsers) => prevUsers.filter(user => user.id !== userId));
+    };
+
+    const handleEditUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        if (!newUserData) return;
+
+        try {
+            const updatedUser = await changeUser({ userData: newUserData, id: newUserData.id! });
+            setUsers((prevUsers) =>
+                prevUsers.map((user) => (user.id === newUserData.id ? updatedUser : user))
+            );
+            setNewUserData({ nickname: '', email: '', level: '' });
+            setIsEditMode(false);
+            setVisibility(false);            
+        } catch (error) {
+            console.log("Error updating user:", error);
+        }
+    };
+
+    const handleEditButtonClick = (user: IUser) => {
+        console.log("handleEditButtonClick", user);
+        setIsEditMode(true);
+        setNewUserData(user);
+        setVisibility(true);
     };
 
     return (
@@ -68,6 +92,7 @@ const Users = () => {
                                 <td>{user.level}</td>
                                 <td className="flex gap-2">
                                     <button className="btn btn-sm btn-outline btn-error" onClick={() => handleDeleteUser(user.id!)}>Del</button>
+                                    <button className="btn btn-sm btn-outline btn-primary" onClick={() => handleEditButtonClick(user)}>Edit</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -94,7 +119,9 @@ const Users = () => {
                                 <option value="Advanced">Advanced</option>
                                 <option value="Beginner">Beginner</option>
                             </select>
-                            <button className="btn btn-sm" onClick={handleAddUser}>Add User</button>
+                            <button className="btn btn-sm" onClick={isEditMode ? handleEditUser : handleAddUser}>
+                                {isEditMode ? 'Update User' : 'Add User'}
+                            </button>
                         </form>
                     </div>
                 </div>

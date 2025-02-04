@@ -62,7 +62,7 @@ export const changeUser = async ({userData, id}: {userData: IUser, id: string}) 
 export const modifyUser = async ({userData, id}: {userData: IUser, id: string}) => {
     try {
         const response = await fetch(`${API_URL}/api/users/${id}`, {
-            method: 'PUT',
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
             },

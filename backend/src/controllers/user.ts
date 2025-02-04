@@ -54,11 +54,15 @@ export const updateUser = async (req: Request, res: Response) => {
     const { body } = req;
     const { id } = req.params;
 
+    console.log('Updating user with id:', id);
+    console.log('User data received:', body);
+
     const user = await User.findByPk(id);
 
     try {
         if (user) {
             const userdb = await user.update(body);
+            console.log('User updated:', userdb);
             res.status(202).json(userdb);
         } else {
             res.status(404).json({
@@ -67,8 +71,8 @@ export const updateUser = async (req: Request, res: Response) => {
         }
     } catch (error) {
         console.log(error);
-        res.json({
-            msg: "Something went wrong"
-        })
+        res.status(500).json({
+            msg: "Something went wrong while updating the user"
+        });
     }
 };
