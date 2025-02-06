@@ -1,26 +1,12 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from '@fullcalendar/daygrid'
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { getEvents } from '../../services/servicesEvent/event-crud';
-import { IEvent } from '../../api/api-interfaces/events-interface';
+import { useEventContext } from "../../context/EventsContext";
 
 const CalendarContent = () => {
-    const [events, setEvents] = useState<IEvent[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    const fetchEvents = async () => {
-        try {
-            const events = await getEvents();
-            console.log("Fetched events:", events);
-            setEvents(events);
-        } catch (error) {
-            console.error("Error fetching events:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    const { events, fetchEvents } = useEventContext();
 
     useEffect(() => {
         fetchEvents();
@@ -43,10 +29,6 @@ const CalendarContent = () => {
         end: formatDate(end),
         description
     }));
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
 
     return (
         <FullCalendar
