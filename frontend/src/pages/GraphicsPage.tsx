@@ -1,7 +1,9 @@
 const GraphicsPage = () => {
     return (
         <>
-        <div>GraphicsPage</div>
+            <div className="prose">
+                <h1 className="py-4">GraphicsPage</h1>
+            </div>
         </>
     )
 };

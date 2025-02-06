@@ -1,13 +1,15 @@
 import { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import locations from "../../api/locations-mockup-data.json";
+import { useLocationContext } from "../../context/LocationContext";
+import { Link } from "react-router-dom";
 
 const Map = () => {
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
     const mapRef = useRef<mapboxgl.Map | null>(null);
     const markersRef = useRef<{ [key: string]: mapboxgl.Marker[] }>({});
     const [filters, setFilters] = useState<{ [key: string]: boolean }>({});
+    const { locations, fetchLocations } = useLocationContext();
 
     //Filters
     const toggleFilter = (place: string) => {
@@ -65,7 +67,7 @@ const Map = () => {
                         .setLngLat([loc.lng, loc.lat])
                         .setPopup(
                             new mapboxgl.Popup({ offset: 25 }).setHTML(
-                                `<h3>${loc.location}</h3><p>${place}</p>`
+                                `<h3>${loc.name}</h3><p>${place}</p>`
                             )
                         )
                         .addTo(map);
@@ -80,15 +82,23 @@ const Map = () => {
 
     return (
         <div>
-            <div className="filter-group my-2">
-                {Object.keys(filters).map((place) => (
-                    <label key={place} className="label cursor-pointer flex justify-end gap-2">
-                        <span className="label-text">{place}</span>
-                        <input type="checkbox" checked={filters[place]} onChange={() => toggleFilter(place)} className="checkbox" />
-                    </label>
-                ))}
+            <div className="map-elements">
+                <div className="filter-group absolute right-[7.5rem] bg-white bg-opacity-50 p-2 rounded z-10 my-2">
+                    {Object.keys(filters).map((place) => (
+                        <label key={place} className="label cursor-pointer flex justify-end gap-2">
+                            <span className="label-text text-black">{place}</span>
+                            <input type="checkbox" checked={filters[place]} onChange={() => toggleFilter(place)} className="checkbox" />
+                        </label>
+                    ))}
+                </div>
+                <div id="map-container" ref={mapContainerRef} style={{ width: "100%", height: "500px" }} />
             </div>
-            <div id="map-container" ref={mapContainerRef} style={{ width: "100%", height: "500px" }} />
+            <div className="map-text-elements prose my-4">
+                <h3>Any fun near you?</h3>
+                <p>Join a table or create your own in the <span><Link to="/calendar" className="link link-hover">Calendar</Link></span>.</p>
+            </div>
+
+
         </div>
     );
 };

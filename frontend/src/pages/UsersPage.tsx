@@ -5,7 +5,7 @@ const UsersPage = () => {
 
     return (
         <div>            
-            <div className="my-2">
+            <div className="my-2 prose">
                 <Users />
             </div>
         </div>

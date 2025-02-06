@@ -33,7 +33,7 @@ const CalendarContent = () => {
     return (
         <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            initialView="dayGridWeek"
+            initialView="dayGridMonth"
             events={calendarEvents}
             editable={true}
             selectable={true}
