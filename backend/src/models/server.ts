@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import routesUsers from '../routes/users';
 import routesEvents from '../routes/events';
+import routesLocations from '../routes/locations';
 import db from '../database/connection';
 import cors from 'cors';
 
@@ -30,8 +31,9 @@ class Server {
             })
         })
 
-        this.app.use('/api/users', routesUsers);
-        this.app.use('/api/events', routesEvents);
+        this.app.use('/api/users', routesUsers);        
+        this.app.use('/api/events', routesEvents);    
+        this.app.use('/api/locations', routesLocations);    
     }
 
     middlewares() {
@@ -45,9 +47,15 @@ class Server {
             optionsSuccessStatus: 204,
         }*/));
 
+        //print backend petitions     
+        this.app.use((req, res, next) => {
+            console.log(`Petición recibida: ${req.method} ${req.url}`);
+            next();
+        });
+
         //parse the body
         this.app.use(express.json());
-        console.log("Middlewares loaded succesfully");
+        console.log("Middlewares loaded succesfully");        
     }
 
     async dbConnect() {
