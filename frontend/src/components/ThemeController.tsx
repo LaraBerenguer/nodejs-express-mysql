@@ -1,8 +1,23 @@
+import { useEffect, useState } from "react";
+
 const ThemeController = () => {
+    const [theme, setTheme] = useState('light');
+
+    const toggleTheme = () => {
+        setTheme(theme === 'dark' ? 'light' : 'dark');
+    };
+
+    useEffect(() => {
+        const htmlElement = document.querySelector('html');
+        if (htmlElement) {
+            htmlElement.setAttribute('data-theme', theme);
+        }        
+    }, [theme]);
+
     return (
         <label className="swap swap-rotate">
             {/* this hidden checkbox controls the state */}
-            <input type="checkbox" className="theme-controller" value="synthwave" />
+            <input type="checkbox" className="theme-controller" value="synthwave" onChange={toggleTheme} checked={theme === 'dark'} />
 
             {/* sun icon */}
             <svg
