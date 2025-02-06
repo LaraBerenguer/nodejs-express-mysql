@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
-import { createEvent, getEvents } from '../services/servicesEvent/event-crud';
-import { IEvent } from '../api/api-interfaces/events-interface';
+import { useEventContext } from '../context/EventsContext';
+import { useLocationContext } from '../context/LocationContext';
+import { useUserContext } from '../context/UserContext';
 import { ILocations } from '../api/api-interfaces/locations-interface';
-import { IUser } from '../api/api-interfaces/user-interface';
-import { getUsers } from '../services/servicesUsers/user-crud';
-import { getLocations } from '../services/servicesLocations/location-crud';
 import LocationForm from './LocationsForm';
 
 interface EventForm {
@@ -20,47 +18,16 @@ interface EventForm {
 }
 
 const EventsForm = () => {
-
+    const { events, fetchEvents, addEvent } = useEventContext();
+    const { locations, fetchLocations } = useLocationContext();
+    const { users, fetchUsers } = useUserContext();
     const [newEvent, setNewEvent] = useState<EventForm>({ title: '', start: '', end: '', allDay: false, location_id: '', user_ids: [''], description: '', category: '', color: '' });
-    const [locations, setLocations] = useState<ILocations[]>([]);
-    const [events, setEvents] = useState<IEvent[]>([]);
-    const [users, setUsers] = useState<IUser[]>([]);
 
     useEffect(() => {
         fetchUsers();
         fetchLocations();
         fetchEvents();        
     }, []);
-
-    const fetchUsers = async () => {
-        try {
-            const users = await getUsers();
-            console.log("fetched users: ", users);
-            setUsers(users);
-        } catch (error) {
-            console.error("Error fetching users:", error);
-        }
-    };
-
-    const fetchEvents = async () => {
-        try {
-            const fetchedEvents = await getEvents();
-            console.log("fetched locations form: ", events);
-            setEvents(fetchedEvents);
-        } catch (error) {
-            console.error("Error fetching events:", error);
-        }
-    };
-
-    const fetchLocations = async () => {
-        try {
-            const locations = await getLocations();
-            console.log("fetched locations: ", locations);
-            setLocations(locations);            
-        } catch (error) {
-            console.error("Error fetching locations:", error);
-        }
-    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -69,7 +36,8 @@ const EventsForm = () => {
 
     const handleEventCreation = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        createEvent(newEvent);
+        addEvent(newEvent)
+        fetchEvents();
         setNewEvent({ title: '', start: '', end: '', allDay: false, location_id: '', user_ids: [''], description: '', category: '', color: '' });
     };
 
@@ -148,6 +116,7 @@ const EventsForm = () => {
                                 </option>
                             ))}
                         </select>
+                        {/*This will go into anothe db table, event_users */}
                         <p>Who's playing?</p>
                         <select
                             className="select select-bordered grow"

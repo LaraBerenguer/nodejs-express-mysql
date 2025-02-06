@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { createLocation } from '../services/servicesLocations/location-crud';
 import { ILocations } from '../api/api-interfaces/locations-interface';
+import { useLocationContext } from '../context/LocationContext';
 
 interface LocationFormProps {
     onLocationCreated: () => void;
 }
 
-const LocationForm = ({ onLocationCreated }: LocationFormProps) => {
+const LocationForm = ({ onLocationCreated }: LocationFormProps) => {    
+    const { locations, fetchLocations, addLocation } = useLocationContext();    
     const [newLocation, setNewLocation] = useState<ILocations>({ name: '', place: '', lng: 0, lat: 0 });
 
     const handleLocationInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -16,7 +17,8 @@ const LocationForm = ({ onLocationCreated }: LocationFormProps) => {
 
     const handleLocationCreation = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        await createLocation(newLocation);
+        addLocation(newLocation);
+        fetchLocations();
         setNewLocation({ name: '', place: '', lng: 0, lat: 0 });
         onLocationCreated();
     };
@@ -28,12 +30,13 @@ const LocationForm = ({ onLocationCreated }: LocationFormProps) => {
                 <input
                     type="text"
                     className="grow"
-                    name="location"
+                    name="name"
                     value={newLocation.name}
                     onChange={handleLocationInputChange}
                     required
                 />
             </label>
+            <p className='text-xs text-gray-500'>Don't know your coordinates? Check them <a className='underline' href='https://www.latlong.net/' target="_blank">here</a>.</p>
             <label className="input input-bordered flex items-center gap-2">
                 Latitude
                 <input
@@ -63,7 +66,7 @@ const LocationForm = ({ onLocationCreated }: LocationFormProps) => {
                 onChange={handleLocationInputChange}
                 required
             >
-                <option value="" disabled hidden>Select Place</option>
+                <option value="" disabled hidden>Is it a Shop?</option>
                 <option value="Shop">Shop</option>
                 <option value="Private Table">Private Table</option>
             </select>
