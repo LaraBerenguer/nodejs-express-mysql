@@ -9,7 +9,12 @@ interface EventModalProps {
 }
 
 const EventModal: React.FC<EventModalProps> = ({ selectedEvent, setSelectedEvent, handleEventUpdate, handleEventDelete, closeModal }) => {
-
+    const confirmAndDelete = () => {
+        if (window.confirm("Are you sure you want to delete this event?")) {
+            handleEventDelete();
+        }
+    };
+    
     return (
         <dialog id="eventModal" className="modal">
             <div className="modal-box">
@@ -44,7 +49,7 @@ const EventModal: React.FC<EventModalProps> = ({ selectedEvent, setSelectedEvent
                 <div className="mt-4 flex justify-end gap-2">
                     <button onClick={closeModal} className="btn">Cancel</button>
                     <button onClick={handleEventUpdate} className="btn btn-primary">Save</button>
-                    <button onClick={handleEventDelete} className="btn btn-error">Delete</button>
+                    <button onClick={confirmAndDelete} className="btn btn-error">Delete</button>
                 </div>
             </div>
         </dialog>

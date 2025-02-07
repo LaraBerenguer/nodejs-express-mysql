@@ -6,6 +6,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import EventModal from './EventModal';
+import './calendar.css';
 
 const CalendarContent = () => {
     const { events, fetchEvents, patchEvent, removeEvent } = useEventContext();
