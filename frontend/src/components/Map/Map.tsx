@@ -28,7 +28,8 @@ const Map = () => {
 
     useEffect(() => {
         fetchLocations();
-    }, [locations]);
+        console.log("MAP FETCH HA PETADO");
+    }, []);
 
     useEffect(() => {
         if (!mapContainerRef.current) return;
@@ -80,7 +81,7 @@ const Map = () => {
                 });
             });
         });
-
+        console.log("MAPBOX HA PETADO");
         return () => map.remove();
     }, []);
 

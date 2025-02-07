@@ -27,6 +27,7 @@ const EventsForm = () => {
         fetchUsers();
         fetchLocations();
         fetchEvents();
+        console.log("EVENTS FORM HA PETADO");
     }, []);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
