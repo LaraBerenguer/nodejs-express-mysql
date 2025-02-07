@@ -8,7 +8,6 @@ import { LocationProvider } from './context/LocationContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-
     <UserProvider>
       <EventProvider>
         <LocationProvider>
