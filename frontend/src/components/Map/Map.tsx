@@ -27,6 +27,10 @@ const Map = () => {
     };
 
     useEffect(() => {
+        fetchLocations();
+    }, [locations]);
+
+    useEffect(() => {
         if (!mapContainerRef.current) return;
 
         mapboxgl.accessToken = import.meta.env.VITE_MAP_TOKEN;

@@ -73,3 +73,30 @@ export const updateEvent = async (req: Request, res: Response) => {
         });
     }
 };
+
+export const patchEvent = async (req: Request, res: Response) => {
+    const { body } = req;
+    const { id } = req.params;
+
+    console.log('Patching event with id:', id);
+    console.log('Event data received:', body);
+
+    const event = await Event.findByPk(id);
+
+    try {
+        if (event) {
+            const eventdb = await event.update(body, { fields: Object.keys(body) });
+            console.log('Event patched:', eventdb);
+            res.status(202).json(eventdb);
+        } else {
+            res.status(404).json({
+                msg: `No event with id ${id}`
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            msg: "Something went wrong while patching the event"
+        });
+    }
+};

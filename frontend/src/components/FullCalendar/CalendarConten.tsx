@@ -12,6 +12,7 @@ const CalendarContent = () => {
         fetchEvents();
     }, []);
 
+    //Manually formating date from db so plugin isn't necessary
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
         const year = date.getFullYear();

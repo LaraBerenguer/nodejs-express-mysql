@@ -1,4 +1,5 @@
 import { IEvent } from '../../api/api-interfaces/events-interface';
+import { PartialIEvent } from '../../api/api-interfaces/events-partial-interface';
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
@@ -46,6 +47,23 @@ export const changeEvent = async ({eventData, id}: {eventData: IEvent, id: strin
     try {
         const response = await fetch(`${API_URL}/api/events/${id}`, {
             method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(eventData)
+        });
+        return response.json();
+    } catch (error) {
+        console.error('Error modifying events:', error);
+        throw error;
+    }
+};
+
+//patch
+export const patchEvent = async ({eventData, id}: {eventData: PartialIEvent, id: string}) => {
+    try {
+        const response = await fetch(`${API_URL}/api/events/${id}`, {
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
             },
