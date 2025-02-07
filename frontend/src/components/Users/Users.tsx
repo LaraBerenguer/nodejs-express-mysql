@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { changeUser, createUser, deleteUser, getUsers } from "../services/servicesUsers/user-crud";
-import { IUser } from "../api/api-interfaces/user-interface";
+import { changeUser, createUser, deleteUser, getUsers } from "../../services/servicesUsers/user-crud";
+import { IUser } from "../../api/api-interfaces/user-interface";
 
 const Users = () => {
 

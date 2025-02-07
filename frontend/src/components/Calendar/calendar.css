@@ -1,6 +1,20 @@
-.sx-react-calendar-wrapper {
-  width: 900px;
-  max-width: 100vw;
-  height: 800px;
-  max-height: 90vh;
+.fc-toolbar .fc-button {
+    background-color: #808080; /* Gris */
+    border-color: #808080; /* Gris */
+    color: white;
+}
+
+.fc-toolbar .fc-button:hover {
+    background-color: #696969; /* Gris oscuro */
+    border-color: #696969; /* Gris oscuro */
+}
+
+.fc-today {
+    background-color: #f0f0f0 !important;  /* Gris claro */
+}
+
+.fc-event {
+    background-color: #4a5568; /* Azul gris oscuro */
+    border-color: #4a5568; /* Azul gris oscuro */
+    color: white;
 }

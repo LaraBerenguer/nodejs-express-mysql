@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { ILocations } from '../api/api-interfaces/locations-interface';
-import { useLocationContext } from '../context/LocationContext';
+import { ILocations } from '../../api/api-interfaces/locations-interface';
+import { useLocationContext } from '../../context/LocationContext';
 
 interface LocationFormProps {
     onLocationCreated: () => void;

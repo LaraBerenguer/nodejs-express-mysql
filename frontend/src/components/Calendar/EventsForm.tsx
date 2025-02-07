@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useEventContext } from '../context/EventsContext';
-import { useLocationContext } from '../context/LocationContext';
-import { useUserContext } from '../context/UserContext';
-import { ILocations } from '../api/api-interfaces/locations-interface';
-import LocationForm from './LocationsForm';
+import { useEventContext } from '../../context/EventsContext';
+import { useLocationContext } from '../../context/LocationContext';
+import { useUserContext } from '../../context/UserContext';
+import { ILocations } from '../../api/api-interfaces/locations-interface';
+import LocationForm from '../Calendar/LocationsForm';
 
 interface EventForm {
     title: string,

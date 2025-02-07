@@ -1,4 +1,4 @@
-import Users from "../components/Users";
+import Users from "../components/Users/Users";
 
 const UsersPage = () => {
     //const handleCreateUser = () => {} 

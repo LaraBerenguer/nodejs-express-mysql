@@ -1,6 +1,6 @@
 //import Calendar from "../components/Calendar/Calendar";
-import EventsForm from "../components/EventsForm";
-import CalendarContent from "../components/FullCalendar/CalendarConten";
+import EventsForm from "../components/Calendar/EventsForm";
+import CalendarContent from "../components/Calendar/CalendarConten";
 
 const CalendarPage = () => {
     return (
