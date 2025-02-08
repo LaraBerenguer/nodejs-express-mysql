@@ -7,7 +7,7 @@ interface LocationFormProps {
 }
 
 const LocationForm = ({ onLocationCreated }: LocationFormProps) => {    
-    const { locations, fetchLocations, addLocation } = useLocationContext();    
+    const { fetchLocations, addLocation } = useLocationContext();    
     const [newLocation, setNewLocation] = useState<ILocations>({ name: '', place: '', lng: 0, lat: 0 });
 
     const handleLocationInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {

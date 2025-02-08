@@ -5,14 +5,26 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "custom": '#6a0dad',
+      },
+    },
   },
   plugins: [
     require('@tailwindcss/typography'),
-    require("daisyui"),    
+    require("daisyui"),
   ],
   daisyui: {
-    themes: ["light", "dark"],
+    themes: [
+      {
+        "light": {
+          ...require("daisyui/src/theming/themes")["light"],
+          "custom": '#6a0dad',
+        }
+      },
+      "dark"
+    ],
   },
 }
 
