@@ -25,12 +25,11 @@ export const deleteEvent = async (req: Request, res: Response) => {
     const event = await Event.findByPk(id);
 
     if (!event) {
-        return res.status(404).json({ msg: `No event with id ${id}` });
-    }
-
-    await event.destroy();
-    return res.status(204).send();
-
+        res.status(404).json({ msg: `No event with id ${id}` });
+    } else {
+        await event.destroy();
+        res.status(204);
+    };
 };
 
 export const createEvent = async (req: Request, res: Response) => {

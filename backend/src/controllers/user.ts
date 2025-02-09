@@ -25,11 +25,11 @@ export const deleteUser = async (req: Request, res: Response) => {
     const user = await User.findByPk(id);
 
     if (!user) {
-        return res.status(404).json({ msg: `No user with id ${id}` });
-    }
-
-    await user.destroy();
-    return res.status(204).send();
+        res.status(404).json({ msg: `No user with id ${id}` });
+    } else {
+        await user.destroy();
+        res.status(204);
+    };
 
     //console.error("Error deleting user:", error);
     //return res.status(500).json({ msg: "Something went wrong" });

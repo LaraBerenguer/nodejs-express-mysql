@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: PALOMITA13#
+      MYSQL_DATABASE: findgames
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./common/findgames-db.sql:/docker-entrypoint-initdb.d/findgames-db.sql
+    networks:
+      - sameNetworkAsMysql # Connects the service to the 'sameNetworkAsMysql' network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    environment:
+      DB_PASS: PALOMITA13#
+      DB_HOST: mysql
+      DB_PORT: 3306
+    ports:
+      - "3001:3001"
+    networks:
+      - sameNetworkAsMysql # Connects the service to the 'sameNetworkAsMysql' network
+    depends_on:
+      - mysql
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "80:80"
+    networks:
+      - sameNetworkAsMysql # Connects the service to the 'sameNetworkAsMysql' network
+    depends_on:
+      - backend
+
+networks:
+  sameNetworkAsMysql: # Defines the 'sameNetworkAsMysql' network
+    driver: bridge # Specifies the network driver as 'bridge'
