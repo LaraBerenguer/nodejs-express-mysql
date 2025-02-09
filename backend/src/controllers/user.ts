@@ -30,17 +30,13 @@ export const deleteUser = async (req: Request, res: Response) => {
         await user.destroy();
         res.status(204);
     };
-
-    //console.error("Error deleting user:", error);
-    //return res.status(500).json({ msg: "Something went wrong" });
-
 };
 
 export const createUser = async (req: Request, res: Response) => {
     const { body } = req;
 
     try {
-        var userdb = await User.create(body);
+        const userdb = await User.create(body);
         res.status(201).json(userdb);
     } catch (error) {
         console.log(error);

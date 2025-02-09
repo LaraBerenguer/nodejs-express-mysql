@@ -1,6 +1,4 @@
-const HomePage = () => {
-    //const handleCreateUser = () => {} 
-
+const HomePage = () => { 
     return (
         <div className="prose">
             <h1>Homepage</h1>  

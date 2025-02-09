@@ -14,38 +14,47 @@ const EventModal: React.FC<EventModalProps> = ({ selectedEvent, setSelectedEvent
             handleEventDelete();
         }
     };
-    
+
     return (
         <dialog id="eventModal" className="modal">
             <div className="modal-box">
                 <h2 className="text-xl font-bold mb-4">Edit Event</h2>
-                <label className="block mb-2">Title:</label>
-                <input
-                    type="text"
-                    value={selectedEvent?.title || ''}
-                    onChange={(e) => setSelectedEvent({ ...selectedEvent, title: e.target.value })}
-                    className="border p-2 w-full rounded"
-                />
-                <label className="block mt-4 mb-2">Description:</label>
-                <textarea
-                    value={selectedEvent?.description || ''}
-                    onChange={(e) => setSelectedEvent({ ...selectedEvent, description: e.target.value })}
-                    className="border p-2 w-full rounded"
-                />
-                <label className="block mt-4 mb-2">Start Date:</label>
-                <input
-                    type="datetime-local"
-                    value={selectedEvent?.start || ''}
-                    onChange={(e) => setSelectedEvent({ ...selectedEvent, start: e.target.value })}
-                    className="border p-2 w-full rounded"
-                />
-                <label className="block mt-4 mb-2">End Date:</label>
-                <input
-                    type="datetime-local"
-                    value={selectedEvent?.end || ''}
-                    onChange={(e) => setSelectedEvent({ ...selectedEvent, end: e.target.value })}
-                    className="border p-2 w-full rounded"
-                />
+                <label htmlFor="title" className="block mb-2">Title:
+                    <input
+                        id="title"
+                        type="text"
+                        value={selectedEvent?.title || ''}
+                        onChange={(e) => setSelectedEvent({ ...selectedEvent, title: e.target.value })}
+                        className="border p-2 w-full rounded my-2"
+                    />
+                </label>
+                <label htmlFor="description" className="block mt-4 mb-2">Description:
+                    <textarea
+                        id="description"
+                        value={selectedEvent?.description || ''}
+                        onChange={(e) => setSelectedEvent({ ...selectedEvent, description: e.target.value })}
+                        className="border p-2 w-full rounded my-2"
+                    />
+                </label>
+
+                <label htmlFor="startDate" className="block mt-4 mb-2">Start Date:
+                    <input
+                        id="startDate"
+                        type="datetime-local"
+                        value={selectedEvent?.start || ''}
+                        onChange={(e) => setSelectedEvent({ ...selectedEvent, start: e.target.value })}
+                        className="border p-2 w-full rounded my-2"
+                    />
+                </label>
+                <label htmlFor="endDate" className="block mt-4 mb-2">End Date:
+                    <input
+                        id="endDate"
+                        type="datetime-local"
+                        value={selectedEvent?.end || ''}
+                        onChange={(e) => setSelectedEvent({ ...selectedEvent, end: e.target.value })}
+                        className="border p-2 w-full rounded my-2"
+                    />
+                </label>
                 <div className="mt-4 flex justify-end gap-2">
                     <button onClick={closeModal} className="btn">Cancel</button>
                     <button onClick={handleEventUpdate} className="btn btn-primary">Save</button>

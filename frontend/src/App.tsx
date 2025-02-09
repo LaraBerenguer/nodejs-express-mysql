@@ -2,10 +2,8 @@ import RoutesComponent from "./routes/routes"
 
 function App() {
   return (
-    <>
-      <RoutesComponent />
-    </>
-  )
+    <RoutesComponent />
+  );
 };
 
 export default App

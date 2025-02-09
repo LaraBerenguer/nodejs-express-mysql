@@ -1,4 +1,4 @@
-import Map from "../components/Map/Map";
+import MapInstance from "../components/Map/Map";
 
 const MapsPage = () => {
     return (
@@ -6,7 +6,7 @@ const MapsPage = () => {
             <div className="maps-page-header prose my-3">
                 <h1 className="py-4">Find where the games happen</h1>
             </div>
-            <div><Map /></div>
+            <div><MapInstance /></div>
         </div>
     )
 };

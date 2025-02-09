@@ -36,7 +36,7 @@ export const createEvent = async (req: Request, res: Response) => {
     const { body } = req;
 
     try {
-        var eventdb = await Event.create(body);
+        const eventdb = await Event.create(body);
         res.status(201).json(eventdb);
     } catch (error) {
         console.log(error);

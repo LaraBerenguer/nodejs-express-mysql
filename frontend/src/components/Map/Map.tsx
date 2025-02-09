@@ -4,7 +4,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { useLocationContext } from "../../context/LocationContext";
 import { Link } from "react-router-dom";
 
-const Map = () => {
+const MapInstance = () => {
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
     const mapRef = useRef<mapboxgl.Map | null>(null);
     const markersRef = useRef<{ [key: string]: mapboxgl.Marker[] }>({});
@@ -106,4 +106,4 @@ const Map = () => {
     );
 };
 
-export default Map;
+export default MapInstance;

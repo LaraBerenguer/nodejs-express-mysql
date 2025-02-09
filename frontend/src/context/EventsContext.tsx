@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { IEvent } from '../api/api-interfaces/events-interface';
 import { getEvents, createEvent, changeEvent, deleteEvent } from '../services/servicesEvent/event-crud';
 import { patchEvent as patchEventService } from '../services/servicesEvent/event-crud';
@@ -72,8 +72,17 @@ export const EventProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         fetchEvents();
     }, []);
 
+    const value = useMemo(() => ({
+        events,
+        fetchEvents,
+        addEvent,
+        updateEvent,
+        patchEvent,
+        removeEvent
+    }), [events]);
+
     return (
-        <EventContext.Provider value={{ events, fetchEvents, addEvent, updateEvent, patchEvent, removeEvent }}>
+        <EventContext.Provider value={value}>
             {children}
         </EventContext.Provider>
     );

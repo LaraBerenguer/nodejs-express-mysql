@@ -49,7 +49,7 @@ const CalendarContent = () => {
     };
 
     const handleEventUpdate = async () => {
-        if (selectedEvent && selectedEvent.id) {
+        if (selectedEvent?.id) {
             try {
                 await patchEvent(selectedEvent.id as string, selectedEvent);
                 await fetchEvents();
@@ -61,7 +61,7 @@ const CalendarContent = () => {
     };
 
     const handleEventDelete = async () => {
-        if (selectedEvent && selectedEvent.id) {
+        if (selectedEvent?.id) {
             try {
                 await removeEvent(selectedEvent.id as string);
                 await fetchEvents();

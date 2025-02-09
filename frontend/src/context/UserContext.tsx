@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { IUser } from '../api/api-interfaces/user-interface';
 import { getUsers, createUser, changeUser, deleteUser } from '../services/servicesUsers/user-crud';
 
@@ -58,8 +58,16 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
         fetchUsers();
     }, []);
 
+    const value = useMemo(() => ({
+        users,
+        fetchUsers,
+        addUser,
+        updateUser,
+        removeUser
+    }), [users]);
+
     return (
-        <UserContext.Provider value={{ users, fetchUsers, addUser, updateUser, removeUser }}>
+        <UserContext.Provider value={value}>
             {children}
         </UserContext.Provider>
     );

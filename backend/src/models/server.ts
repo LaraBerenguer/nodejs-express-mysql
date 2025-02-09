@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import routesUsers from '../routes/users';
 import routesEvents from '../routes/events';
 import routesLocations from '../routes/locations';
@@ -6,17 +6,21 @@ import db from '../database/connection';
 import cors from 'cors';
 
 class Server {
-    private app: express.Application;
-    private port: string;
+    private readonly app: express.Application;
+    private readonly port: string;
 
     constructor() {
         this.app = express();
         this.port = process.env.PORT || "3001";
         this.middlewares();
         this.routes();
-        this.dbConnect();
+        this.init();
         this.listen();
     };
+
+    async init () {
+        await this.dbConnect();
+    }
 
     listen() {
         this.app.listen(this.port, () => {

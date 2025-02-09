@@ -25,8 +25,7 @@ const EventsForm = () => {
 
     useEffect(() => {
         fetchUsers();
-        fetchLocations();
-        //fetchEvents();        
+        fetchLocations();        
     }, []);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {

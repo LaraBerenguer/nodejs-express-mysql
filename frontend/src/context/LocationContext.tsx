@@ -1,11 +1,11 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { ILocations } from '../api/api-interfaces/locations-interface';
 import { getLocations, createLocation } from '../services/servicesLocations/location-crud';
 
 interface LocationsContextProps {
     locations: ILocations[];
     fetchLocations: () => void;
-    addLocation: (location: ILocations) => void;    
+    addLocation: (location: ILocations) => void;
 }
 
 const LocationContext = createContext<LocationsContextProps | undefined>(undefined);
@@ -36,8 +36,14 @@ export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         fetchLocations();
     }, []);
 
+    const value = useMemo(() => ({
+        locations,
+        fetchLocations,
+        addLocation
+    }), [locations]);
+
     return (
-        <LocationContext.Provider value={{ locations, fetchLocations, addLocation }}>
+        <LocationContext.Provider value={value}>
             {children}
         </LocationContext.Provider>
     );

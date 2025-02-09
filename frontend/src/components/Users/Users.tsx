@@ -5,7 +5,7 @@ import { IUser } from "../../api/api-interfaces/user-interface";
 const Users = () => {
 
     const [users, setUsers] = useState<IUser[]>([]);
-    const [visibiliy, setVisibility] = useState<boolean>(false);
+    const [visibility, setVisibility] = useState<boolean>(false);
     const [isEditMode, setIsEditMode] = useState<boolean>(false);
     const [newUserData, setNewUserData] = useState<IUser>({ nickname: '', email: '', level: '' });   
 
@@ -91,7 +91,7 @@ const Users = () => {
                                 <td>{user.email}</td>
                                 <td>{user.level}</td>
                                 <td className="flex gap-2">
-                                    <button className="btn btn-sm btn-outline btn-error" onClick={() => handleDeleteUser(user.id!)}>Del</button>
+                                    <button className="btn btn-sm btn-outline btn-error" onClick={() => user.id && handleDeleteUser(user.id)}>Del</button>
                                     <button className="btn btn-sm btn-outline btn-primary" onClick={() => handleEditButtonClick(user)}>Edit</button>
                                 </td>
                             </tr>
@@ -100,10 +100,10 @@ const Users = () => {
                 </table>
             </div>
             <div className="user-button self-center my-4">
-                {!visibiliy && <button className="btn btn-outline btn-primary" onClick={openForm}>Add User</button>}
+                {!visibility && <button className="btn btn-outline btn-primary" onClick={openForm}>Add User</button>}
             </div>
             {
-                visibiliy && <div className="user-form max-w-md self-center">
+                visibility && <div className="user-form max-w-md self-center">
                     <div className="user-form-addUser">
                         <form className="flex flex-col gap-2">
                             <label className="input input-bordered flex items-center gap-2">
