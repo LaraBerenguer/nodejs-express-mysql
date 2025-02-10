@@ -18,8 +18,7 @@ const LocationsCharts = () => {
             {
                 label: 'Number of Events',
                 data: Object.values(locationPlaces),
-                backgroundColor: 'rgba(170, 140, 180)',
-                borderWidth: 2,
+                backgroundColor: 'rgba(216, 180, 248)',                
                 borderRadius: 10,
                 barThickness: 100,
             },

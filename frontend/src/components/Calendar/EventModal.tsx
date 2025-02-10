@@ -57,7 +57,7 @@ const EventModal: React.FC<EventModalProps> = ({ selectedEvent, setSelectedEvent
                 </label>
                 <div className="mt-4 flex justify-end gap-2">
                     <button onClick={closeModal} className="btn">Cancel</button>
-                    <button onClick={handleEventUpdate} className="btn btn-primary">Save</button>
+                    <button onClick={handleEventUpdate} className="btn btn-secondary">Save</button>
                     <button onClick={confirmAndDelete} className="btn btn-error">Delete</button>
                 </div>
             </div>

@@ -1,8 +1,8 @@
-const HomePage = () => { 
+import Hero from "../components/Hero/Hero";
+
+const HomePage = () => {
     return (
-        <div className="prose">
-            <h1>Homepage</h1>  
-        </div>
+        <Hero />
     )
 };
 

@@ -92,7 +92,7 @@ const Users = () => {
                                 <td>{user.level}</td>
                                 <td className="flex gap-2">
                                     <button className="btn btn-sm btn-outline btn-error" onClick={() => user.id && handleDeleteUser(user.id)}>Del</button>
-                                    <button className="btn btn-sm btn-outline btn-primary" onClick={() => handleEditButtonClick(user)}>Edit</button>
+                                    <button className="btn btn-sm btn-outline btn-success" onClick={() => handleEditButtonClick(user)}>Edit</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -100,7 +100,7 @@ const Users = () => {
                 </table>
             </div>
             <div className="user-button self-center my-4">
-                {!visibility && <button className="btn btn-outline btn-primary" onClick={openForm}>Add User</button>}
+                {!visibility && <button className="btn btn-outline btn-secondary" onClick={openForm}>Add User</button>}
             </div>
             {
                 visibility && <div className="user-form max-w-md self-center">
