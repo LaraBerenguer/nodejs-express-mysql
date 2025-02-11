@@ -2,11 +2,11 @@
 
 ## 📄 Description
 
+CHECK IT LIVE HERE: [https://findgames-three.vercel.app/](https://findgames-three.vercel.app/)
+
 Hi! This is a full-stack web application for scheduling and managing tabletop gaming sessions. You can create users, events, manage locations, and coordinate with other players. Auth/login is coming soon!
 
 I built the app with React + Vite. Frontend includes state management using Context API. Backend includes Nodejs, express and database management with Sequelize and Postgresql.
-
-Check it live here: [https://findgames-three.vercel.app/](https://findgames-three.vercel.app/)
 
 ## 💻 Technologies Used
 
