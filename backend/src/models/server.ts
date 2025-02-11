@@ -36,7 +36,7 @@ class Server {
         })
 
         const corsOptions = {
-            origin: 'https://findgames-three.vercel.app',
+            origin: 'https://findgames-three.vercel.app/',
             methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
             allowedHeaders: ['Content-Type', 'Authorization'],
         };
@@ -59,6 +59,7 @@ class Server {
         };
 
         this.app.use(cors());*/
+        console.log("CORS is being applied!");
 
         //print backend petitions     
         this.app.use((req, res, next) => {
