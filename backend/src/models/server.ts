@@ -42,14 +42,15 @@ class Server {
 
     middlewares() {
 
+        //LOCAL CORS
+        //this.app.use(cors());
+
         //cors express config
-        this.app.use(cors(/*{
-            origin: ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175'],
+        const corsOptions = {
+            origin: ['https://findgames-three.vercel.app', 'https://findgames-three.vercel.app/'], 
             methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-            allowedHeaders: ['Content-Type'],
-            preflightContinue: false,
-            optionsSuccessStatus: 204,
-        }*/));
+            allowedHeaders: ['Content-Type', 'Authorization'],
+        };
 
         //print backend petitions     
         this.app.use((req, res, next) => {
