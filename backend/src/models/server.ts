@@ -18,7 +18,7 @@ class Server {
         this.listen();
     };
 
-    async init () {
+    async init() {
         await this.dbConnect();
     }
 
@@ -35,9 +35,15 @@ class Server {
             })
         })
 
-        this.app.use('/api/users', routesUsers);        
-        this.app.use('/api/events', routesEvents);    
-        this.app.use('/api/locations', routesLocations);    
+        const corsOptions = {
+            origin: 'https://findgames-three.vercel.app',
+            methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+            allowedHeaders: ['Content-Type', 'Authorization'],
+        };
+
+        this.app.use('/api/users', cors(corsOptions), routesUsers);
+        this.app.use('/api/events', cors(corsOptions), routesEvents);
+        this.app.use('/api/locations', cors(corsOptions), routesLocations);
     }
 
     middlewares() {
@@ -45,12 +51,14 @@ class Server {
         //LOCAL CORS
         //this.app.use(cors());
 
-        //cors express config
+        /*cors express config
         const corsOptions = {
-            origin: ['https://findgames-three.vercel.app', 'https://findgames-three.vercel.app/'], 
+            origin: 'https://findgames-three.vercel.app', 
             methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
             allowedHeaders: ['Content-Type', 'Authorization'],
         };
+
+        this.app.use(cors());*/
 
         //print backend petitions     
         this.app.use((req, res, next) => {
@@ -60,7 +68,7 @@ class Server {
 
         //parse the body
         this.app.use(express.json());
-        console.log("Middlewares loaded succesfully");        
+        console.log("Middlewares loaded succesfully");
     }
 
     async dbConnect() {
