@@ -15,8 +15,8 @@ const User = db.define('User', {
     {
         tableName: 'users',
         timestamps: true,
-        createdAt: "createdAt",
-        updatedAt: "updatedAt"
+        createdAt: "createdat",
+        updatedAt: "updatedat"
     });
 
 export default User;
