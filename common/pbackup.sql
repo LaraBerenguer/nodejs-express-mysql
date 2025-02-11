@@ -33,13 +33,13 @@ CREATE TABLE events (
   description TEXT,
   category VARCHAR(50),
   color VARCHAR(7),
-  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  createdat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (location_id) REFERENCES locations (id)
 );
 
 -- Dumping data for table `events`
-INSERT INTO events (id, title, start, end, allDay, location_id, description, category, color, createdAt, updatedAt) VALUES
+INSERT INTO events (id, title, start, end, allDay, location_id, description, category, color, createdat, updatedat) VALUES
 (1, 'Partida de D&D', '2025-02-01 18:00:00', '2025-02-01 21:00:00', FALSE, 1, 'Sesión semanal de D&D en Avinguda Diagonal.', 'partida', '#ff5733', '2025-02-04 16:18:48', '2025-02-04 16:18:48'),
 (3, 'Gaming', '2025-02-03 12:30:00', '2025-02-03 20:30:00', FALSE, 2, 'Valorant', 'partida', '#ff5733', '2025-02-04 20:24:02', '2025-02-07 15:24:28'),
 (4, 'DnD Game', '2025-02-06 17:00:00', '2025-02-06 20:30:00', FALSE, 2, 'Session 34', '', '', '2025-02-06 15:49:24', '2025-02-06 15:49:24'),
@@ -56,12 +56,12 @@ CREATE TABLE locations (
   place VARCHAR(50) CHECK (place IN ('Shop', 'Private Table')),
   lng FLOAT,
   lat FLOAT,
-  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  createdat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Dumping data for table `locations`
-INSERT INTO locations (id, name, place, lng, lat, createdAt, updatedAt) VALUES
+INSERT INTO locations (id, name, place, lng, lat, createdat, updatedat) VALUES
 (1, 'Kaburi', 'Shop', 2.17832, 41.3925, '2025-02-06 16:34:44', '2025-02-06 16:34:44'),
 (2, 'Dungeon Marvels', 'Shop', 2.13064, 41.3958, '2025-02-06 16:34:44', '2025-02-06 16:34:44'),
 (3, 'Carrer Cristobal de Moura', 'Private Table', 2.205, 41.4118, '2025-02-06 16:34:44', '2025-02-06 16:34:44'),
@@ -75,12 +75,12 @@ CREATE TABLE users (
   nickname VARCHAR(45),
   email VARCHAR(255) UNIQUE,
   level VARCHAR(50) CHECK (level IN ('Advanced', 'Beginner')),
-  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  createdat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Dumping data for table `users`
-INSERT INTO users (id, nickname, email, level, createdAt, updatedAt) VALUES
+INSERT INTO users (id, nickname, email, level, createdat, updatedat) VALUES
 (1, 'Alice', 'alice.martinez@email.com', 'Advanced', '2025-02-02 12:20:40', '2025-02-02 12:20:40'),
 (2, 'Carlos', 'carlos.lopez@email.com', 'Beginner', '2025-02-02 12:20:40', '2025-02-02 12:20:40'),
 (3, 'Edu', 'eduard@email.com', 'Advanced', '2025-02-02 13:16:50', '2025-02-10 11:42:56'),

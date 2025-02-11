@@ -28,6 +28,7 @@ const Event = db.define('Event', {
     }
 },
     {
+        tableName: 'events',
         timestamps: true,
         createdAt: "createdAt",
         updatedAt: "updatedAt"

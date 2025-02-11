@@ -20,6 +20,7 @@ const Location = db.define('Location', {
     },
 },
     {
+        tableName: 'locations',
         timestamps: true,
         createdAt: "createdAt",
         updatedAt: "updatedAt"
