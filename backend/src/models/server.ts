@@ -19,6 +19,8 @@ class Server {
     };
 
     async init() {
+        this.middlewares();
+        this.routes();
         await this.dbConnect();
     }
 
