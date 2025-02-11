@@ -2,6 +2,11 @@ import db from '../database/connection';
 import { DataTypes } from 'sequelize';
 
 const Event = db.define('Event', {    
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
     title: {
         type: DataTypes.STRING(255)
     },

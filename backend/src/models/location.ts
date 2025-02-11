@@ -2,6 +2,11 @@ import db from '../database/connection';
 import { DataTypes } from 'sequelize';
 
 const Location = db.define('Location', {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
     name: {
         type: DataTypes.STRING(255),
         allowNull: false,
