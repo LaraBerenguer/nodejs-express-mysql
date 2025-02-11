@@ -30,8 +30,8 @@ const Event = db.define('Event', {
     {
         tableName: 'events',
         timestamps: true,
-        createdAt: "createdAt",
-        updatedAt: "updatedAt"
+        createdAt: "createdat",
+        updatedAt: "updatedat"
     });
 
 export default Event;

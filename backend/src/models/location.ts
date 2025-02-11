@@ -22,8 +22,8 @@ const Location = db.define('Location', {
     {
         tableName: 'locations',
         timestamps: true,
-        createdAt: "createdAt",
-        updatedAt: "updatedAt"
+        createdAt: "createdat",
+        updatedAt: "updatedat"
     });
 
 export default Location;
