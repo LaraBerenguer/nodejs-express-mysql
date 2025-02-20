@@ -1,17 +1,21 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "../components/Navbar/Navbar";
+import { Suspense } from "react";
 import '../index.css';
+import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
+import LoadingDots from "../components/Loading/Loading";
 
 const Layout = () => {
-    return(
-        <div>            
+    return (
+        <div>
             <div className="Navbar">
-              <Navbar />  
-            </div>            
+                <Navbar />
+            </div>
             <main>
-                <Outlet />
-            </main> 
+                <Suspense fallback={<LoadingDots />}>
+                    <Outlet />
+                </Suspense>
+            </main>
             <Footer />
         </div>
     );
