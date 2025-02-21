@@ -6,8 +6,7 @@ import path from "path";
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: "0.0.0.0",
-    port: 80
+    host: "0.0.0.0",    
   },  
   build: {
     outDir: path.join(__dirname, "dist")
