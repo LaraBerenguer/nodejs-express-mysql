@@ -1,8 +1,17 @@
-import { useEffect, useState, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { changeUser, createUser, deleteUser, getUsers } from "../../services/servicesUsers/user-crud";
 import { IUser } from "../../api/api-interfaces/user-interface";
 
 //reducer
+type Action =
+    | { type: "SET_USER"; payload: IUser[] }
+    | { type: "SET_VISIBILITY"; payload: boolean }
+    | { type: "SET_EDIT_MODE"; payload: boolean }
+    | { type: "SET_NEW_USER_DATA"; payload: Partial<IUser> }
+    | { type: "ADD_USER"; payload: IUser }
+    | { type: "EDIT_USER"; payload: IUser }
+    | { type: "DELETE_USER"; payload: string };
+
 const initialState = {
     users: [] as IUser[],
     visibility: false,
@@ -10,7 +19,7 @@ const initialState = {
     newUserData: { nickname: '', email: '', level: '' } as IUser
 };
 
-const reducer = (state: typeof initialState, action: any) => {
+const reducer = (state: typeof initialState, action: Action) => {
     switch (action.type) {
         case "SET_USER":
             return { ...state, users: action.payload };
@@ -48,45 +57,34 @@ const Users = () => {
     };
 
     const openForm = () => {
-        setVisibility(true);
         dispatch({ type: "SET_VISIBILITY", payload: true });
-        setIsEditMode(false);
         dispatch({ type: "SET_EDIT_MODE", payload: false });
-        setNewUserData({ nickname: '', email: '', level: '' });
         dispatch({ type: "SET_NEW_USER_DATA", payload: initialState.newUserData });
-    }
+    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setNewUserData({ ...newUserData, [name]: value });
+        dispatch({ type: "SET_NEW_USER_DATA", payload: { [name]: value } });
     };
 
     const handleAddUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        await createUser(newUserData);
-        setVisibility(false);
-        setNewUserData({ nickname: '', email: '', level: '' });
-        fetchUsers();
-        console.log("prev users:", users);
+        const newData = await createUser(state.newUserData);
+        dispatch({ type: "ADD_USER", payload: newData });
     };
 
     const handleDeleteUser = async (userId: string) => {
         await deleteUser(userId);
-        setUsers((prevUsers) => prevUsers.filter(user => user.id !== userId));
+        dispatch({ type: "DELETE_USER", payload: userId });
     };
 
     const handleEditUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        if (!newUserData) return;
+        if (!state.newUserData) return;
 
         try {
-            const updatedUser = await changeUser({ userData: newUserData, id: newUserData.id! });
-            setUsers((prevUsers) =>
-                prevUsers.map((user) => (user.id === newUserData.id ? updatedUser : user))
-            );
-            setNewUserData({ nickname: '', email: '', level: '' });
-            setIsEditMode(false);
-            setVisibility(false);
+            const updatedUser = await changeUser({ userData: state.newUserData, id: state.newUserData.id! });
+            dispatch({ type: "EDIT_USER", payload: updatedUser })
         } catch (error) {
             console.log("Error updating user:", error);
         }
@@ -94,9 +92,9 @@ const Users = () => {
 
     const handleEditButtonClick = (user: IUser) => {
         console.log("handleEditButtonClick", user);
-        setIsEditMode(true);
-        setNewUserData(user);
-        setVisibility(true);
+        dispatch({ type: "SET_VISIBILITY", payload: true });
+        dispatch({ type: "SET_EDIT_MODE", payload: true });
+        dispatch({ type: "SET_NEW_USER_DATA", payload: user });
     };
 
     return (
@@ -111,7 +109,7 @@ const Users = () => {
                             <th>Level</th>
                         </tr>
                     </thead>
-                    {users.map(user =>
+                    {state.users.map((user: IUser) =>
                         <tbody key={user.id}>
                             <tr className="hover">
                                 <th></th>
@@ -128,28 +126,28 @@ const Users = () => {
                 </table>
             </div>
             <div className="user-button self-center my-4">
-                {!visibility && <button className="btn btn-outline btn-secondary" onClick={openForm}>Add User</button>}
+                {!state.visibility && <button className="btn btn-outline btn-secondary" onClick={openForm}>Add User</button>}
             </div>
             {
-                visibility && <div className="user-form max-w-md self-center">
+                state.visibility && <div className="user-form max-w-md self-center">
                     <div className="user-form-addUser">
                         <form className="flex flex-col gap-2">
                             <label className="input input-bordered flex items-center gap-2">
                                 Name
-                                <input type="text" className="grow" name="nickname" value={newUserData.nickname} onChange={handleInputChange} placeholder="Daisy" required />
+                                <input type="text" className="grow" name="nickname" value={state.newUserData.nickname} onChange={handleInputChange} placeholder="Daisy" required />
                             </label>
                             <label className="input input-bordered flex items-center gap-2">
                                 Email
-                                <input type="email" className="grow" name="email" value={newUserData.email} onChange={handleInputChange} placeholder="daisy@site.com" required />
+                                <input type="email" className="grow" name="email" value={state.newUserData.email} onChange={handleInputChange} placeholder="daisy@site.com" required />
                             </label>
-                            <select className="select select-bordered w-full max-w-xs" name="level" value={newUserData.level} onChange={handleInputChange} required>
+                            <select className="select select-bordered w-full max-w-xs" name="level" value={state.newUserData.level} onChange={handleInputChange} required>
                                 <option value="" disabled hidden>Select Level</option>
                                 <option value="Advanced">Advanced</option>
                                 <option value="Beginner">Beginner</option>
                             </select>
-                            <button className="btn btn-sm" onClick={isEditMode ? handleEditUser : handleAddUser}>
-                                {isEditMode ? 'Update User' : 'Add User'}
-                            </button>
+                            <button className="btn btn-sm" onClick={state.isEditMode ? handleEditUser : handleAddUser}>
+                                {state.isEditMode ? 'Update User' : 'Add User'}
+                            </button>                            
                         </form>
                     </div>
                 </div>
