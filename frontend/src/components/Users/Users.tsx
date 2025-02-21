@@ -1,13 +1,38 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useReducer } from "react";
 import { changeUser, createUser, deleteUser, getUsers } from "../../services/servicesUsers/user-crud";
 import { IUser } from "../../api/api-interfaces/user-interface";
 
-const Users = () => {
+//reducer
+const initialState = {
+    users: [] as IUser[],
+    visibility: false,
+    isEditMode: false,
+    newUserData: { nickname: '', email: '', level: '' } as IUser
+};
 
-    const [users, setUsers] = useState<IUser[]>([]);
-    const [visibility, setVisibility] = useState<boolean>(false);
-    const [isEditMode, setIsEditMode] = useState<boolean>(false);
-    const [newUserData, setNewUserData] = useState<IUser>({ nickname: '', email: '', level: '' });   
+const reducer = (state: typeof initialState, action: any) => {
+    switch (action.type) {
+        case "SET_USER":
+            return { ...state, users: action.payload };
+        case "SET_VISIBILITY":
+            return { ...state, visibility: action.payload };
+        case "SET_EDIT_MODE":
+            return { ...state, isEditMode: action.payload };
+        case "SET_NEW_USER_DATA":
+            return { ...state, newUserData: { ...state.newUserData, ...action.payload } };
+        case "ADD_USER":
+            return { ...state, visibility: false, users: [...state.users, action.payload], newUserData: initialState.newUserData };
+        case "EDIT_USER":
+            return { ...state, visibility: false, isEditMode: false, newUserData: initialState.newUserData, users: state.users.map(user => user.id === action.payload.id ? action.payload : user) };
+        case "DELETE_USER":
+            return { ...state, users: state.users.filter(user => user.id !== action.payload) };
+        default:
+            return state;
+    };
+};
+
+const Users = () => {
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
         fetchUsers();
@@ -16,7 +41,7 @@ const Users = () => {
     const fetchUsers = async () => {
         try {
             const users = await getUsers();
-            setUsers(users);
+            dispatch({ type: "SET_USER", payload: users });
         } catch (error) {
             console.error("Error fetching users:", error);
         }
@@ -24,8 +49,11 @@ const Users = () => {
 
     const openForm = () => {
         setVisibility(true);
+        dispatch({ type: "SET_VISIBILITY", payload: true });
         setIsEditMode(false);
+        dispatch({ type: "SET_EDIT_MODE", payload: false });
         setNewUserData({ nickname: '', email: '', level: '' });
+        dispatch({ type: "SET_NEW_USER_DATA", payload: initialState.newUserData });
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -43,7 +71,7 @@ const Users = () => {
     };
 
     const handleDeleteUser = async (userId: string) => {
-        await deleteUser(userId);    
+        await deleteUser(userId);
         setUsers((prevUsers) => prevUsers.filter(user => user.id !== userId));
     };
 
@@ -58,7 +86,7 @@ const Users = () => {
             );
             setNewUserData({ nickname: '', email: '', level: '' });
             setIsEditMode(false);
-            setVisibility(false);            
+            setVisibility(false);
         } catch (error) {
             console.log("Error updating user:", error);
         }
