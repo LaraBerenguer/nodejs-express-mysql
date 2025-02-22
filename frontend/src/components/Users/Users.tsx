@@ -33,8 +33,8 @@ const reducer = (state: typeof initialState, action: Action) => {
             return { ...state, visibility: false, users: [...state.users, action.payload], newUserData: initialState.newUserData };
         case "EDIT_USER":
             return { ...state, visibility: false, isEditMode: false, newUserData: initialState.newUserData, users: state.users.map(user => user.id === action.payload.id ? action.payload : user) };
-        case "DELETE_USER":
-            return { ...state, users: state.users.filter(user => user.id !== action.payload) };
+        /*case "DELETE_USER":
+            return { ...state, users: state.users.filter(user => user.id !== action.payload) };*/
         default:
             return state;
     };
@@ -75,8 +75,7 @@ const Users = () => {
 
     const handleDeleteUser = async (userId: string | number) => {
         try {
-            await deleteUser(userId.toString());
-            dispatch({ type: "DELETE_USER", payload: userId.toString() });
+            await deleteUser(userId.toString());            
             await fetchUsers();
         } catch (error) {
             console.error(`Error deleting user with id ${userId}:`, error);
