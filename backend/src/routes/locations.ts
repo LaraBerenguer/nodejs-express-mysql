@@ -3,8 +3,8 @@ import { getLocations, getLocation, createLocation } from '../controllers/locati
 
 const router = Router();
 
-router.get('/', getLocations)
-router.get('/:id', getLocation)
-router.post('/', createLocation)
+router.get('/', getLocations as RequestHandler);
+router.get('/:id', getLocation as RequestHandler);
+router.post('/', createLocation as RequestHandler);
 
 export default router;

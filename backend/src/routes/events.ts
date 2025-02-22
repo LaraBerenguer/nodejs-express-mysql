@@ -3,11 +3,11 @@ import { createEvent, deleteEvent, getEvent, getEvents, patchEvent, updateEvent 
 
 const router = Router();
 
-router.get('/', getEvents)
-router.get('/:id', getEvent)
-router.delete('/:id', deleteEvent)
-router.post('/', createEvent)
-router.put('/:id', updateEvent)
-router.patch('/:id', patchEvent)
+router.get('/', getEvents as RequestHandler);
+router.get('/:id', getEvent as RequestHandler);
+router.delete('/:id', deleteEvent as RequestHandler);
+router.post('/', createEvent as RequestHandler);
+router.put('/:id', updateEvent as RequestHandler);
+router.patch('/:id', patchEvent as RequestHandler);
 
 export default router;
