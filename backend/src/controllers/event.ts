@@ -36,6 +36,9 @@ export const createEvent = async (req: Request, res: Response) => {
     const { body } = req;
 
     try {
+        if (!body.title) {
+            return res.status(400).json({ msg: "Title is required" });
+        }
         const eventdb = await Event.create(body);
         res.status(201).json(eventdb);
     } catch (error) {

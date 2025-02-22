@@ -34,7 +34,7 @@ const EventsForm = () => {
     };
 
     const handleEventCreation = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+        e.preventDefault();        
         addEvent(newEvent)
         fetchEvents();
         setNewEvent({ title: '', start: '', end: '', allDay: false, location_id: '', user_ids: [''], description: '', category: '', color: '' });
