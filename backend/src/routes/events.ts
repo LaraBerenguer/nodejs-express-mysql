@@ -1,4 +1,5 @@
 import {Router} from 'express';
+import {RequestHandler} from 'express';
 import { createEvent, deleteEvent, getEvent, getEvents, patchEvent, updateEvent } from '../controllers/event';
 
 const router = Router();

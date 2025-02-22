@@ -1,4 +1,5 @@
 import {Router} from 'express';
+import {RequestHandler} from 'express';
 import { getLocations, getLocation, createLocation } from '../controllers/location';
 
 const router = Router();

@@ -1,4 +1,5 @@
 import {Router} from 'express';
+import {RequestHandler} from 'express';
 import { createUser, deleteUser, getUser, getUsers, updateUser } from '../controllers/user';
 
 const router = Router();
