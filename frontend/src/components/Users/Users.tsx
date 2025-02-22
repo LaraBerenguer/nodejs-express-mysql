@@ -73,9 +73,14 @@ const Users = () => {
         dispatch({ type: "ADD_USER", payload: newData });
     };
 
-    const handleDeleteUser = async (userId: string) => {
-        await deleteUser(userId);
-        dispatch({ type: "DELETE_USER", payload: userId });
+    const handleDeleteUser = async (userId: string | number) => {
+        try {
+            await deleteUser(userId.toString());
+            dispatch({ type: "DELETE_USER", payload: userId.toString() });
+            await fetchUsers();
+        } catch (error) {
+            console.error(`Error deleting user with id ${userId}:`, error);
+        }
     };
 
     const handleEditUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -147,7 +152,7 @@ const Users = () => {
                             </select>
                             <button className="btn btn-sm" onClick={state.isEditMode ? handleEditUser : handleAddUser}>
                                 {state.isEditMode ? 'Update User' : 'Add User'}
-                            </button>                            
+                            </button>
                         </form>
                     </div>
                 </div>

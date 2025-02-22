@@ -28,7 +28,7 @@ export const deleteUser = async (req: Request, res: Response) => {
         res.status(404).json({ msg: `No user with id ${id}` });
     } else {
         await user.destroy();
-        res.status(204);
+        res.status(204).send();
     };
 };
 
