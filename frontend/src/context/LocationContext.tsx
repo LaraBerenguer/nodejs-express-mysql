@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useMemo } from 'react';
 import { ILocations } from '../api/api-interfaces/locations-interface';
 import { getLocations, createLocation } from '../services/servicesLocations/location-crud';
 
@@ -8,16 +8,32 @@ interface LocationsContextProps {
     addLocation: (location: ILocations) => void;
 }
 
+const initialState = {
+    locations: [] as ILocations[],
+};
+
+const reducer = (state: typeof initialState, action: any) => {
+    switch (action.type) {
+        case "SET_LOCATIONS":
+            return { ...state, locations: action.payload };
+        case "ADD_LOCATIONS":
+            return { ...state, locations: [...state.locations, action.payload] };
+        default:
+            return state;
+    };
+};
+
 const LocationContext = createContext<LocationsContextProps | undefined>(undefined);
 
 export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
-    const [locations, setLocations] = useState<ILocations[]>([]);
+    //const [locations, setLocations] = useState<ILocations[]>([]);
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     const fetchLocations = async () => {
         try {
             const fetchedLocations = await getLocations();
-            setLocations(fetchedLocations);
+            dispatch({type: "SET_LOCATIONS", payload: fetchedLocations});
         } catch (error) {
             console.error('Error fetching lpcations:', error);
         }
@@ -26,7 +42,7 @@ export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const addLocation = async (location: ILocations) => {
         try {
             const newLocation = await createLocation(location);
-            setLocations((prevLocations) => [...prevLocations, newLocation]);
+            dispatch({type: "ADD_LOCATIONS", payload: newLocation});
         } catch (error) {
             console.error('Error creating locations:', error);
         }
@@ -37,10 +53,10 @@ export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }, []);
 
     const value = useMemo(() => ({
-        locations,
+        locations: state.locations,
         fetchLocations,
         addLocation
-    }), [locations]);
+    }), [state.locations]);
 
     return (
         <LocationContext.Provider value={value}>

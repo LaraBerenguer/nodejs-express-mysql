@@ -33,8 +33,6 @@ const reducer = (state: typeof initialState, action: Action) => {
             return { ...state, visibility: false, users: [...state.users, action.payload], newUserData: initialState.newUserData };
         case "EDIT_USER":
             return { ...state, visibility: false, isEditMode: false, newUserData: initialState.newUserData, users: state.users.map(user => user.id === action.payload.id ? action.payload : user) };
-        /*case "DELETE_USER":
-            return { ...state, users: state.users.filter(user => user.id !== action.payload) };*/
         default:
             return state;
     };
@@ -75,7 +73,7 @@ const Users = () => {
 
     const handleDeleteUser = async (userId: string | number) => {
         try {
-            await deleteUser(userId.toString());            
+            await deleteUser(userId.toString());
             await fetchUsers();
         } catch (error) {
             console.error(`Error deleting user with id ${userId}:`, error);
@@ -90,12 +88,11 @@ const Users = () => {
             const updatedUser = await changeUser({ userData: state.newUserData, id: state.newUserData.id! });
             dispatch({ type: "EDIT_USER", payload: updatedUser })
         } catch (error) {
-            console.log("Error updating user:", error);
+            console.error("Error updating user:", error);
         }
     };
 
-    const handleEditButtonClick = (user: IUser) => {
-        console.log("handleEditButtonClick", user);
+    const handleEditButtonClick = (user: IUser) => {        
         dispatch({ type: "SET_VISIBILITY", payload: true });
         dispatch({ type: "SET_EDIT_MODE", payload: true });
         dispatch({ type: "SET_NEW_USER_DATA", payload: user });
