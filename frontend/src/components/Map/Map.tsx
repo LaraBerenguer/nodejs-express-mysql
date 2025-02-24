@@ -27,7 +27,7 @@ const MapInstance = () => {
     };
 
     useEffect(() => {
-        fetchLocations();        
+        fetchLocations();
     }, []);
 
     useEffect(() => {
@@ -100,8 +100,6 @@ const MapInstance = () => {
                 <h3>Any fun near you?</h3>
                 <p>Join a table or create your own in the <span><Link to="/calendar" className="link link-hover">Calendar</Link></span>.</p>
             </div>
-
-
         </div>
     );
 };

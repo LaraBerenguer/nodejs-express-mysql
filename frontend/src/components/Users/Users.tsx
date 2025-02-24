@@ -1,10 +1,12 @@
 import { useEffect, useReducer } from "react";
 import { changeUser, createUser, deleteUser, getUsers } from "../../services/servicesUsers/user-crud";
 import { IUser } from "../../api/api-interfaces/user-interface";
+import LoadingDots from "../Loading/Loading";
 
 //reducer
 type Action =
     | { type: "SET_USER"; payload: IUser[] }
+    | { type: "SET_LOADING"; payload: boolean }
     | { type: "SET_VISIBILITY"; payload: boolean }
     | { type: "SET_EDIT_MODE"; payload: boolean }
     | { type: "SET_NEW_USER_DATA"; payload: Partial<IUser> }
@@ -14,6 +16,7 @@ type Action =
 
 const initialState = {
     users: [] as IUser[],
+    loading: false,
     visibility: false,
     isEditMode: false,
     newUserData: { nickname: '', email: '', level: '' } as IUser
@@ -23,6 +26,8 @@ const reducer = (state: typeof initialState, action: Action) => {
     switch (action.type) {
         case "SET_USER":
             return { ...state, users: action.payload };
+        case "SET_LOADING":
+            return { ...state, loading: action.payload };
         case "SET_VISIBILITY":
             return { ...state, visibility: action.payload };
         case "SET_EDIT_MODE":
@@ -46,13 +51,13 @@ const Users = () => {
     }, []);
 
     const fetchUsers = async () => {
-        try {
-            const users = await getUsers();
-            dispatch({ type: "SET_USER", payload: users });
-        } catch (error) {
-            console.error("Error fetching users:", error);
-        }
+        dispatch({ type: "SET_LOADING", payload: true });
+        const users = await getUsers();
+        dispatch({ type: "SET_USER", payload: users });
+        dispatch({ type: "SET_LOADING", payload: false });
     };
+
+    if (state.loading) { return <LoadingDots /> };
 
     const openForm = () => {
         dispatch({ type: "SET_VISIBILITY", payload: true });
@@ -92,7 +97,7 @@ const Users = () => {
         }
     };
 
-    const handleEditButtonClick = (user: IUser) => {        
+    const handleEditButtonClick = (user: IUser) => {
         dispatch({ type: "SET_VISIBILITY", payload: true });
         dispatch({ type: "SET_EDIT_MODE", payload: true });
         dispatch({ type: "SET_NEW_USER_DATA", payload: user });
